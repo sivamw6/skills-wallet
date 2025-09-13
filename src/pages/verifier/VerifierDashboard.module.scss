@@ -1,0 +1,411 @@
+// ========================================
+// Verifier Dashboard Component Styles
+// ========================================
+
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.verifierContainer {
+  @include full-screen;
+  background: $digital-dark;
+  padding: $spacing-8;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(46, 134, 171, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-8;
+  position: relative;
+  z-index: 1;
+}
+
+.welcomeSection {
+  h1 {
+    @include heading-1;
+    @include text-gradient($primary-green, lighten($primary-green, 20%));
+    margin-bottom: $spacing-3;
+  }
+
+  p {
+    @include body-text;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-2;
+
+    strong {
+      color: white;
+    }
+  }
+}
+
+.logoutButton {
+  @include button-secondary;
+  padding: $spacing-3 $spacing-5;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.verificationSection {
+  @include glass-effect(0.9);
+  @include card-style($spacing-8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1;
+  margin-bottom: $spacing-8;
+}
+
+.sectionHeader {
+  margin-bottom: $spacing-6;
+
+  h2 {
+    @include heading-2;
+    color: white;
+    margin-bottom: $spacing-3;
+  }
+
+  p {
+    @include body-text;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.verificationForm {
+  @include grid-2;
+  gap: $spacing-6;
+  margin-bottom: $spacing-6;
+
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    label {
+      @include body-text;
+      font-weight: $font-weight-semibold;
+      color: white;
+      font-size: $font-size-sm;
+    }
+
+    input, select {
+      @include input-style;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: white;
+
+      &:focus {
+        border-color: $primary-green;
+        @include focus-ring($primary-green);
+      }
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
+}
+
+.verifyButton {
+  @include button-primary;
+  width: 100%;
+  padding: $spacing-4 $spacing-8;
+  font-size: $font-size-lg;
+  @include glow-effect($primary-green, 20px, 0.3);
+
+  &.loading {
+    @include pulse;
+  }
+}
+
+.resultContainer {
+  @include glass-effect(0.9);
+  @include card-style($spacing-8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1;
+  margin-top: $spacing-8;
+}
+
+.resultHeader {
+  @include flex-between;
+  margin-bottom: $spacing-6;
+
+  h3 {
+    @include heading-2;
+    color: white;
+  }
+}
+
+.secondaryButton {
+  @include button-secondary;
+  background: $primary-blue;
+  color: white;
+  border-color: $primary-blue;
+  padding: $spacing-3 $spacing-6;
+
+  &:hover {
+    background: lighten($primary-blue, 10%);
+    border-color: lighten($primary-blue, 10%);
+  }
+}
+
+.verificationStatus {
+  @include flex-center;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  border-radius: $radius-xl;
+  margin-bottom: $spacing-6;
+  text-align: center;
+
+  &.valid {
+    background: rgba(78, 205, 196, 0.1);
+    border: 1px solid rgba(78, 205, 196, 0.3);
+    color: $primary-green;
+  }
+
+  &.invalid {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: $error;
+  }
+
+  .statusIcon {
+    font-size: $font-size-2xl;
+  }
+
+  .statusText {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-lg;
+  }
+}
+
+.credentialDetails {
+  @include glass-effect(0.8);
+  padding: $spacing-6;
+  border-radius: $radius-2xl;
+  margin-bottom: $spacing-5;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h4 {
+    @include heading-3;
+    color: white;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.detailGrid {
+  @include grid-2;
+  gap: $spacing-4;
+}
+
+.detailItem {
+  @include flex-between;
+  padding: $spacing-3 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    @include body-text;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: $font-weight-semibold;
+  }
+
+  .value {
+    @include body-text;
+    color: white;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-lg;
+
+    &.score {
+      @include text-gradient($primary-green, lighten($primary-green, 20%));
+      font-size: $font-size-2xl;
+    }
+  }
+
+  .txId {
+    @include body-text;
+    color: $primary-orange;
+    font-family: $font-family-mono;
+    font-size: $font-size-sm;
+    background: rgba(255, 107, 53, 0.1);
+    padding: $spacing-2 $spacing-3;
+    border-radius: $radius-base;
+    word-break: break-all;
+  }
+}
+
+.blockchainInfo {
+  @include glass-effect(0.8);
+  padding: $spacing-6;
+  border-radius: $radius-2xl;
+  margin-bottom: $spacing-5;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h4 {
+    @include heading-3;
+    color: white;
+    margin-bottom: $spacing-4;
+  }
+}
+
+.verificationDetails {
+  @include grid-3;
+  gap: $spacing-4;
+}
+
+.verificationItem {
+  @include flex-between;
+  padding: $spacing-2 0;
+
+  .verificationLabel {
+    @include body-text;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: $font-weight-semibold;
+  }
+
+  .statusValid {
+    color: $primary-green;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.recommendation {
+  @include glass-effect(0.8);
+  padding: $spacing-6;
+  border-radius: $radius-2xl;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h4 {
+    @include heading-3;
+    color: white;
+    margin-bottom: $spacing-4;
+  }
+
+  p {
+    @include body-text;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.errorResult {
+  text-align: center;
+
+  .errorMessage {
+    @include body-text;
+    color: $error;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.helpSection {
+  @include glass-effect(0.9);
+  @include card-style($spacing-8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1;
+
+  h3 {
+    @include heading-2;
+    color: white;
+    margin-bottom: $spacing-6;
+  }
+}
+
+.helpContent {
+  @include grid-2;
+  gap: $spacing-6;
+  margin-bottom: $spacing-6;
+}
+
+.helpItem {
+  h4 {
+    @include heading-3;
+    color: white;
+    margin-bottom: $spacing-3;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      @include body-text;
+      color: rgba(255, 255, 255, 0.7);
+      padding: $spacing-1 0;
+      position: relative;
+      padding-left: $spacing-5;
+
+      &::before {
+        content: '•';
+        color: $primary-green;
+        font-weight: $font-weight-bold;
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
+}
+
+.helpFooter {
+  @include gradient-bg(rgba(78, 205, 196, 0.1), rgba(46, 134, 171, 0.1));
+  padding: $spacing-4;
+  border-radius: $radius-xl;
+  border: 1px solid rgba(78, 205, 196, 0.2);
+  font-style: italic;
+  @include body-text;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+// Responsive Design
+@include mobile {
+  .verifierContainer {
+    padding: $spacing-4;
+  }
+
+  .header {
+    @include flex-column;
+    gap: $spacing-4;
+    text-align: center;
+  }
+
+  .verificationForm {
+    @include grid-responsive(100%);
+  }
+
+  .detailGrid {
+    @include grid-responsive(100%);
+  }
+
+  .verificationDetails {
+    @include grid-responsive(100%);
+  }
+
+  .helpContent {
+    @include grid-responsive(100%);
+  }
+}

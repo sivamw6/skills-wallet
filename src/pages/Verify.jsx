@@ -1,5 +1,13 @@
 import { useState } from "react";
 import { verifyByTxId } from "../service/mockAPI";
+import { 
+  Button, 
+  Card, 
+  Input, 
+  Typography, 
+  Container, 
+  Badge 
+} from "../components/ui";
 
 /** Verifier page: paste TxID to check credential integrity */
 export default function Verify() {
@@ -13,41 +21,83 @@ export default function Verify() {
   }
 
   return (
-    <div style={{...box, backgroundColor: "#0f172a", color: "white", minHeight: "100vh"}}>
-      <h2 style={{color: "#ff6b35", fontSize: "2rem", marginBottom: "20px"}}>Verifier Portal</h2>
-      <p style={{color: "rgba(255, 255, 255, 0.8)", fontSize: "1.1rem", marginBottom: "30px"}}>Paste a TxID from the blockchain records to verify a credential.</p>
-
-      <form onSubmit={handleVerify} style={{ display: "flex", gap: 8, maxWidth: 560 }}>
-        <input
-          style={{...input, backgroundColor: "rgba(255, 255, 255, 0.1)", color: "white", border: "1px solid rgba(255, 255, 255, 0.2)", borderRadius: "8px"}}
-          value={txId}
-          onChange={(e) => setTxId(e.target.value)}
-          placeholder="Enter TxID"
-        />
-        <button type="submit" style={{...btn, backgroundColor: "#ff6b35", color: "white", border: "none", borderRadius: "8px", padding: "12px 24px", fontSize: "1.1rem"}}>Verify</button>
-      </form>
-
-      {result && (
-        <div style={{...card, backgroundColor: "rgba(255, 255, 255, 0.1)", color: "white", borderRadius: "12px", padding: "20px", marginTop: "20px"}}>
-          {result.ok ? (
-            <>
-              <p style={{color: "#4ecdc4", fontSize: "1.2rem", marginBottom: "15px"}}><strong>Valid credential</strong></p>
-              <p style={{color: "white", margin: "8px 0"}}>Student: {result.data.studentName}</p>
-              <p style={{color: "white", margin: "8px 0"}}>Skill: {result.data.skillName}</p>
-              <p style={{color: "white", margin: "8px 0"}}>Score: {result.data.score}</p>
-              <p style={{color: "white", margin: "8px 0"}}>TxID: <code style={{backgroundColor: "rgba(255, 255, 255, 0.2)", padding: "2px 6px", borderRadius: "4px"}}>{result.data.txId}</code></p>
-            </>
-          ) : (
-            <p style={{color: "#ef4444", fontSize: "1.1rem"}}><strong>Not found</strong>: TxID does not exist.</p>
-          )}
+    <Container variant="default" size="lg" fullHeight centered>
+      <Card variant="glass" size="lg">
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <Typography variant="h2" gradient primary>
+            🔍 Verifier Portal
+          </Typography>
+          <Typography variant="body" color="white" style={{ marginTop: '0.5rem' }}>
+            Paste a TxID from the blockchain records to verify a credential.
+          </Typography>
         </div>
-      )}
-    </div>
+
+        <form onSubmit={handleVerify} style={{ display: 'flex', gap: '1rem', maxWidth: '560px', margin: '0 auto' }}>
+          <Input
+            variant="dark"
+            size="lg"
+            value={txId}
+            onChange={(e) => setTxId(e.target.value)}
+            placeholder="Enter TxID"
+            style={{ flex: 1 }}
+          />
+          <Button type="submit" variant="primary" size="lg">
+            Verify
+          </Button>
+        </form>
+
+        {result && (
+          <Card variant="glass" style={{ marginTop: '2rem' }}>
+            {result.ok ? (
+              <>
+                <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                  <Badge variant="success" size="lg" style={{ marginBottom: '0.5rem', display: 'block' }}>
+                    Valid credential
+                  </Badge>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body" color="white">Student:</Typography>
+                    <Typography variant="body" color="white" style={{ fontWeight: '600' }}>{result.data.studentName}</Typography>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body" color="white">Skill:</Typography>
+                    <Typography variant="body" color="white" style={{ fontWeight: '600' }}>{result.data.skillName}</Typography>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body" color="white">Score:</Typography>
+                    <Badge variant={result.data.score >= 70 ? 'success' : result.data.score >= 50 ? 'warning' : 'error'}>
+                      {result.data.score}%
+                    </Badge>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body" color="white">TxID:</Typography>
+                    <code style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      padding: '0.25rem 0.5rem',
+                      borderRadius: '0.375rem',
+                      fontSize: '0.875rem',
+                      fontFamily: 'monospace'
+                    }}>
+                      {result.data.txId}
+                    </code>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div style={{ textAlign: 'center' }}>
+                <Badge variant="error" size="lg" style={{ marginBottom: '0.5rem', display: 'block' }}>
+                  Not found
+                </Badge>
+                <Typography variant="body" color="white">
+                  TxID does not exist.
+                </Typography>
+              </div>
+            )}
+          </Card>
+        )}
+      </Card>
+    </Container>
   );
 }
-
-// Basic styles only
-const box = { padding: 20 };
-const input = { padding: 8, margin: "5px" };
-const btn = { padding: "8px 12px" };
-const card = { marginTop: 12, border: "1px solid #ccc", padding: 12 };

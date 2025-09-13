@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getAssessment, evaluateAssessment } from "../service/mockAPI";
+import { 
+  Button, 
+  Card, 
+  Typography, 
+  Container, 
+  Badge 
+} from "../components/ui";
 
 /**
  * Assessment Page - Displays 3 MCQ questions and evaluates answers
@@ -42,74 +49,127 @@ export default function Assessment() {
   }
 
   return (
-    <div style={{...container, backgroundColor: "#0f172a", color: "white", minHeight: "100vh"}}>
-      <h2 style={{color: "#ff6b35", fontSize: "2rem", marginBottom: "20px"}}>{assessment.title}</h2>
-      <p style={{color: "rgba(255, 255, 255, 0.8)", fontSize: "1.1rem", marginBottom: "30px"}}>Complete the assessment below. Select your answers and submit when ready.</p>
-      
-      <form onSubmit={handleSubmit} style={form}>
-        {assessment.questions.map((question, index) => (
-          <div key={question.questionId} style={{...questionContainer, backgroundColor: "rgba(255, 255, 255, 0.1)", color: "white", borderRadius: "12px"}}>
-            <h4 style={{color: "#4ecdc4", fontSize: "1.2rem", marginBottom: "15px"}}>Question {index + 1}</h4>
-            <p style={{...questionText, color: "white", fontSize: "1.1rem"}}>{question.text}</p>
-            <div style={optionsContainer}>
-              {question.options.map((option, optionIndex) => (
-                <label key={optionIndex} style={{...optionLabel, color: "white", padding: "8px", borderRadius: "8px", backgroundColor: "rgba(255, 255, 255, 0.05)"}}>
-                  <input
-                    type="radio"
-                    name={`q${index}`}
-                    value={option}
-                    checked={answers[index] === option}
-                    onChange={() => handleAnswerChange(index, option)}
-                    style={radioInput}
-                  />
-                  <span style={{...optionText, color: "white"}}>{option}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        ))}
-
-        {!isSubmitted && (
-          <button type="submit" style={{...submitBtn, backgroundColor: "#ff6b35", color: "white", border: "none", borderRadius: "8px", padding: "12px 24px", fontSize: "1.1rem"}} disabled={Object.keys(answers).length < assessment.questions.length}>
-            Submit Assessment
-          </button>
-        )}
-      </form>
-
-      {result && (
-        <div style={{...resultContainer, backgroundColor: "rgba(255, 255, 255, 0.1)", color: "white", borderRadius: "12px", padding: "20px"}}>
-          <h3 style={{color: "#4ecdc4", fontSize: "1.5rem", marginBottom: "20px"}}>Assessment Results</h3>
-          <div style={{...scoreContainer, backgroundColor: "rgba(255, 255, 255, 0.05)", padding: "15px", borderRadius: "8px"}}>
-            <p style={{color: "white", fontSize: "1.2rem"}}><strong>Score:</strong> {result.score}%</p>
-            <p style={{color: "white", fontSize: "1.2rem"}}><strong>Correct Answers:</strong> {result.correctAnswers} / {result.totalQuestions}</p>
-          </div>
-          
-          <div style={actionButtons}>
-            <button onClick={goToIssueCredential} style={{...primaryBtn, backgroundColor: "#ff6b35", color: "white", border: "none", borderRadius: "8px", padding: "12px 24px", fontSize: "1.1rem"}}>
-              Issue Credential
-            </button>
-            <button onClick={() => navigate("/provider/dashboard")} style={{...secondaryBtn, backgroundColor: "#2e86ab", color: "white", border: "none", borderRadius: "8px", padding: "12px 24px", fontSize: "1.1rem"}}>
-              Back to Dashboard
-            </button>
-          </div>
+    <Container variant="default" size="lg" fullHeight>
+      <Card variant="glass" size="lg">
+        <div style={{ marginBottom: '2rem' }}>
+          <Typography variant="h2" color="white" style={{ marginBottom: '0.5rem' }}>
+            {assessment.title}
+          </Typography>
+          <Typography variant="body" color="white">
+            Complete the assessment below. Select your answers and submit when ready.
+          </Typography>
         </div>
-      )}
-    </div>
+        
+        <form onSubmit={handleSubmit}>
+          {assessment.questions.map((question, index) => (
+            <Card key={question.questionId} variant="dark" style={{ marginBottom: '2rem' }}>
+              <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
+                Question {index + 1}
+              </Typography>
+              <Typography variant="body" color="white" style={{ marginBottom: '1.5rem' }}>
+                {question.text}
+              </Typography>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {question.options.map((option, optionIndex) => (
+                  <label 
+                    key={optionIndex} 
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      padding: '1rem',
+                      background: answers[index] === option ? 'rgba(78, 205, 196, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                      border: answers[index] === option ? '2px solid rgba(78, 205, 196, 0.3)' : '2px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '0.75rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      color: 'white'
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      name={`q${index}`}
+                      value={option}
+                      checked={answers[index] === option}
+                      onChange={() => handleAnswerChange(index, option)}
+                      style={{
+                        width: '1.25rem',
+                        height: '1.25rem',
+                        accentColor: '#4ECDC4'
+                      }}
+                    />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
+            </Card>
+          ))}
+
+          {!isSubmitted && (
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              fullWidth
+              disabled={Object.keys(answers).length < assessment.questions.length}
+              style={{ marginTop: '2rem' }}
+            >
+              Submit Assessment
+            </Button>
+          )}
+        </form>
+
+        {result && (
+          <Card variant="glass" style={{ marginTop: '2rem' }}>
+            <Typography variant="h3" color="white" centered style={{ marginBottom: '1.5rem' }}>
+              Assessment Results
+            </Typography>
+            
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              gap: '2rem', 
+              marginBottom: '2rem',
+              flexWrap: 'wrap'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <Badge 
+                  variant={result.score >= 70 ? 'success' : result.score >= 50 ? 'warning' : 'error'} 
+                  size="lg"
+                  style={{ marginBottom: '0.5rem', display: 'block' }}
+                >
+                  {result.score}%
+                </Badge>
+                <Typography variant="body" color="white">Score</Typography>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
+                  {result.correctAnswers} / {result.totalQuestions}
+                </Typography>
+                <Typography variant="body" color="white">Correct Answers</Typography>
+              </div>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={goToIssueCredential}
+              >
+                Issue Credential
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={() => navigate("/provider/dashboard")}
+              >
+                Back to Dashboard
+              </Button>
+            </div>
+          </Card>
+        )}
+      </Card>
+    </Container>
   );
 }
-
-// Basic styles only
-const container = { padding: 20 };
-const form = { margin: "20px 0" };
-const questionContainer = { padding: 15, border: "1px solid #ccc", margin: "10px 0" };
-const questionText = { fontWeight: "bold", marginBottom: 10 };
-const optionsContainer = { margin: "10px 0" };
-const optionLabel = { display: "flex", alignItems: "center", margin: "5px 0" };
-const radioInput = { marginRight: 8 };
-const optionText = { marginLeft: 5 };
-const submitBtn = { padding: "10px 20px", margin: "10px 0" };
-const resultContainer = { marginTop: 20, padding: 15, border: "2px solid green" };
-const scoreContainer = { marginBottom: 15 };
-const actionButtons = { display: "flex", gap: 10, flexWrap: "wrap" };
-const primaryBtn = { padding: "10px 20px", margin: "5px" };
-const secondaryBtn = { padding: "10px 20px", margin: "5px" };

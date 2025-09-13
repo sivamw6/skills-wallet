@@ -1,0 +1,57 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.grid {
+  display: grid;
+
+  // Column configurations
+  &.cols1 {
+    grid-template-columns: 1fr;
+  }
+
+  &.cols2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.cols3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &.cols4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &.cols6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  &.cols12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  // Gap configurations
+  &.gapSm {
+    gap: $spacing-2;
+  }
+
+  &.gapMd {
+    gap: $spacing-4;
+  }
+
+  &.gapLg {
+    gap: $spacing-6;
+  }
+
+  // Responsive behavior
+  &.responsive {
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+
+    @include tablet {
+      &.cols3, &.cols4, &.cols6, &.cols12 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}

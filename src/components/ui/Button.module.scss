@@ -1,0 +1,135 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.button {
+  @include flex-center;
+  gap: $spacing-2;
+  border: none;
+  border-radius: $radius-2xl;
+  font-family: $font-family-primary;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all $transition-base;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  outline: none;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  // Size variants
+  &.sm {
+    padding: $spacing-2 $spacing-4;
+    font-size: $font-size-sm;
+    min-height: 36px;
+  }
+
+  &.md {
+    padding: $spacing-3 $spacing-6;
+    font-size: $font-size-base;
+    min-height: 44px;
+  }
+
+  &.lg {
+    padding: $spacing-4 $spacing-8;
+    font-size: $font-size-lg;
+    min-height: 52px;
+  }
+
+  // Color variants
+  &.primary {
+    @include button-primary;
+    @include glow-effect($primary-orange, 20px, 0.3);
+
+    &:hover:not(:disabled) {
+      @include hover-lift(-3px);
+      box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+    }
+  }
+
+  &.secondary {
+    @include button-secondary;
+    background: $primary-blue;
+    color: white;
+    border-color: $primary-blue;
+    @include glow-effect($primary-blue, 15px, 0.2);
+
+    &:hover:not(:disabled) {
+      @include hover-lift(-2px);
+      background: lighten($primary-blue, 10%);
+      border-color: lighten($primary-blue, 10%);
+    }
+  }
+
+  &.success {
+    @include button-success;
+    @include glow-effect($primary-green, 15px, 0.2);
+
+    &:hover:not(:disabled) {
+      @include hover-lift(-2px);
+      box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+    }
+  }
+
+  &.danger {
+    background: $error;
+    color: white;
+    border: 2px solid $error;
+    @include glow-effect($error, 15px, 0.2);
+
+    &:hover:not(:disabled) {
+      @include hover-lift(-2px);
+      background: darken($error, 10%);
+      border-color: darken($error, 10%);
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+    }
+  }
+
+  &.outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  // Full width
+  &.fullWidth {
+    width: 100%;
+  }
+
+  // Loading state
+  &.loading {
+    @include pulse;
+    cursor: not-allowed;
+
+    .loadingText {
+      opacity: 0.7;
+    }
+  }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: $radius-full;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}

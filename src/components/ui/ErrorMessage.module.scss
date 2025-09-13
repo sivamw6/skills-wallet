@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.errorMessage {
+  padding: $spacing-4;
+  border-radius: $radius-xl;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-4;
+  transition: all $transition-base;
+
+  &.error {
+    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+    color: $error;
+    border: 1px solid #FECACA;
+  }
+
+  &.warning {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    color: #92400E;
+    border: 1px solid #FDE68A;
+  }
+
+  &.info {
+    background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+    color: #1E40AF;
+    border: 1px solid #BFDBFE;
+  }
+}

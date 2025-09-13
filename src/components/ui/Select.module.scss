@@ -1,0 +1,96 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.select {
+  @include input-style;
+  transition: all $transition-base;
+  cursor: pointer;
+
+  // Size variants
+  &.sm {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    min-height: 36px;
+  }
+
+  &.md {
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-base;
+    min-height: 44px;
+  }
+
+  &.lg {
+    padding: $spacing-4 $spacing-5;
+    font-size: $font-size-lg;
+    min-height: 52px;
+  }
+
+  // Variant styles
+  &.default {
+    background: white;
+    border-color: $gray-200;
+    color: $gray-800;
+
+    &:focus {
+      border-color: $primary-blue;
+      @include focus-ring($primary-blue);
+    }
+
+    option {
+      color: $gray-800;
+    }
+  }
+
+  &.dark {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: white;
+
+    &:focus {
+      border-color: $primary-orange;
+      @include focus-ring($primary-orange);
+    }
+
+    option {
+      background: $digital-dark;
+      color: white;
+    }
+  }
+
+  &.outlined {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+
+    &:focus {
+      border-color: $primary-green;
+      @include focus-ring($primary-green);
+    }
+
+    option {
+      background: $digital-dark;
+      color: white;
+    }
+  }
+
+  // States
+  &.error {
+    border-color: $error;
+    background: rgba(239, 68, 68, 0.05);
+
+    &:focus {
+      @include focus-ring($error);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: $gray-100;
+
+    &:focus {
+      border-color: $gray-300;
+      box-shadow: none;
+    }
+  }
+}

@@ -1,0 +1,305 @@
+// ========================================
+// SCSS Mixins for Skills Wallet
+// ========================================
+
+// Flexbox Utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Grid Utilities
+@mixin grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-6;
+}
+
+@mixin grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-6;
+}
+
+@mixin grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-6;
+}
+
+@mixin grid-responsive($min-width: 200px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $spacing-6;
+}
+
+// Visual Effects
+@mixin glass-effect($opacity: 0.95) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin gradient-bg($color1, $color2, $direction: 135deg) {
+  background: linear-gradient($direction, $color1 0%, $color2 100%);
+}
+
+@mixin glow-effect($color, $size: 20px, $opacity: 0.3) {
+  box-shadow: 0 0 $size rgba($color, $opacity);
+}
+
+@mixin text-gradient($color1, $color2, $direction: 135deg) {
+  background: linear-gradient($direction, $color1 0%, $color2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Interactive States
+@mixin hover-lift($translateY: -3px) {
+  transition: transform $transition-base;
+  
+  &:hover {
+    transform: translateY($translateY);
+  }
+}
+
+@mixin focus-ring($color: $primary-blue, $size: 4px) {
+  &:focus {
+    outline: none;
+    box-shadow: 
+      0 0 0 $size rgba($color, 0.1),
+      0 4px 12px rgba($color, 0.15);
+  }
+}
+
+@mixin button-hover($translateY: -3px) {
+  transition: all $transition-base;
+  
+  &:hover:not(:disabled) {
+    transform: translateY($translateY);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Layout Utilities
+@mixin container($max-width: $container-lg) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-4;
+}
+
+@mixin full-screen {
+  min-height: 100vh;
+  width: 100%;
+}
+
+@mixin card-style($padding: $card-padding) {
+  background: white;
+  border-radius: $radius-3xl;
+  padding: $padding;
+  box-shadow: $shadow-xl;
+  border: 1px solid $gray-200;
+}
+
+// Form Elements
+@mixin input-style {
+  width: 100%;
+  padding: $input-padding-y $input-padding-x;
+  border: $border-width solid $gray-200;
+  border-radius: $radius-2xl;
+  font-size: $font-size-base;
+  font-family: $font-family-primary;
+  transition: all $transition-base;
+  background: white;
+  box-shadow: $shadow-sm;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-blue;
+    @include focus-ring($primary-blue);
+    transform: translateY(-2px);
+  }
+  
+  &::placeholder {
+    color: $gray-400;
+  }
+}
+
+@mixin button-primary {
+  @include gradient-bg($primary-orange, $sunset-orange);
+  @include button-hover;
+  color: white;
+  border: none;
+  border-radius: $radius-2xl;
+  font-weight: $font-weight-bold;
+  cursor: pointer;
+  box-shadow: $shadow-lg;
+  position: relative;
+  overflow: hidden;
+}
+
+@mixin button-secondary {
+  background: white;
+  color: $gray-700;
+  border: $border-width solid $gray-300;
+  border-radius: $radius-2xl;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all $transition-base;
+  
+  &:hover {
+    background: $gray-50;
+    border-color: $gray-400;
+  }
+}
+
+@mixin button-success {
+  @include gradient-bg($primary-green, $success);
+  @include button-hover;
+  color: white;
+  border: none;
+  border-radius: $radius-xl;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  box-shadow: $glow-green;
+}
+
+// Typography
+@mixin heading-1 {
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-extrabold;
+  line-height: $line-height-tight;
+  @include text-gradient($primary-orange, $sunset-orange);
+}
+
+@mixin heading-2 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: $gray-800;
+}
+
+@mixin heading-3 {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: $gray-800;
+}
+
+@mixin body-text {
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: $gray-600;
+}
+
+// Responsive Design
+@mixin mobile {
+  @media (max-width: $breakpoint-md - 1px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg - 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == mobile {
+    @include mobile {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet {
+    @include tablet {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop {
+    @include desktop {
+      @content;
+    }
+  }
+}
+
+// Animation Utilities
+@mixin fade-in-up($delay: 0s) {
+  animation: fadeInUp 0.6s ease $delay forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@mixin pulse($color: $primary-orange) {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Accessibility
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid $primary-blue;
+    outline-offset: 2px;
+  }
+}

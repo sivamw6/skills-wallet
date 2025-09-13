@@ -1,0 +1,66 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.card {
+  border-radius: $radius-3xl;
+  transition: all $transition-base;
+  position: relative;
+
+  // Size variants
+  &.sm {
+    padding: $spacing-4;
+  }
+
+  &.md {
+    padding: $spacing-6;
+  }
+
+  &.lg {
+    padding: $spacing-8;
+  }
+
+  // Variant styles
+  &.default {
+    @include card-style($spacing-6);
+    border: 1px solid $gray-200;
+    background: white;
+  }
+
+  &.glass {
+    @include glass-effect(0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  &.outlined {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  &.dark {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  // Interactive states
+  &.hover {
+    &:hover {
+      @include hover-lift(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  &.clickable {
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      @include hover-lift(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}

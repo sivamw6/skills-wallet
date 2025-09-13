@@ -1,0 +1,86 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  font-weight: $font-weight-semibold;
+  transition: all $transition-base;
+
+  // Size variants
+  &.sm {
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-xs;
+    min-height: 20px;
+  }
+
+  &.md {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-sm;
+    min-height: 24px;
+  }
+
+  &.lg {
+    padding: $spacing-2 $spacing-4;
+    font-size: $font-size-base;
+    min-height: 28px;
+  }
+
+  // Color variants
+  &.success {
+    background: rgba(78, 205, 196, 0.2);
+    color: $primary-green;
+    border: 1px solid rgba(78, 205, 196, 0.3);
+
+    &.outlined {
+      background: transparent;
+      border: 1px solid $primary-green;
+    }
+  }
+
+  &.warning {
+    background: rgba(255, 107, 53, 0.2);
+    color: $primary-orange;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+
+    &.outlined {
+      background: transparent;
+      border: 1px solid $primary-orange;
+    }
+  }
+
+  &.error {
+    background: rgba(239, 68, 68, 0.2);
+    color: $error;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+
+    &.outlined {
+      background: transparent;
+      border: 1px solid $error;
+    }
+  }
+
+  &.info {
+    background: rgba(46, 134, 171, 0.2);
+    color: $primary-blue;
+    border: 1px solid rgba(46, 134, 171, 0.3);
+
+    &.outlined {
+      background: transparent;
+      border: 1px solid $primary-blue;
+    }
+  }
+
+  &.neutral {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &.outlined {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+  }
+}

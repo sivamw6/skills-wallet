@@ -1,0 +1,91 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+// Typography variants
+.h1 {
+  @include heading-1;
+}
+
+.h2 {
+  @include heading-2;
+}
+
+.h3 {
+  @include heading-3;
+}
+
+.h4 {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+.h5 {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+.h6 {
+  font-size: $font-size-base;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+.body {
+  @include body-text;
+}
+
+.caption {
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+// Color variants
+.primary {
+  color: $primary-orange;
+}
+
+.secondary {
+  color: $primary-blue;
+}
+
+.success {
+  color: $primary-green;
+}
+
+.warning {
+  color: $primary-orange;
+}
+
+.error {
+  color: $error;
+}
+
+.white {
+  color: white;
+}
+
+.gray {
+  color: $gray-600;
+}
+
+// Text modifiers
+.gradient {
+  &.primary {
+    @include text-gradient($primary-orange, $sunset-orange);
+  }
+
+  &.secondary {
+    @include text-gradient($primary-blue, lighten($primary-blue, 20%));
+  }
+
+  &.success {
+    @include text-gradient($primary-green, lighten($primary-green, 20%));
+  }
+}
+
+.centered {
+  text-align: center;
+}

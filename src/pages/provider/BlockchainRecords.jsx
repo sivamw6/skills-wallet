@@ -1,22 +1,98 @@
 import { listChainTx } from "../../service/mockAPI";
+import { Link } from "react-router-dom";
+import styles from "./BlockchainRecords.module.scss";
 
-/** PoC page: show mock blockchain tx history */
+/**
+ * Blockchain Records Page - Shows mock blockchain transaction history
+ * Displays all issued credentials with their transaction IDs
+ */
 export default function BlockchainRecords() {
   const txs = listChainTx();
+
+  function getScoreClass(score) {
+    if (score >= 90) return 'excellent';
+    if (score >= 80) return 'good';
+    if (score >= 70) return 'pass';
+    return 'fail';
+  }
+
+  function getScoreLabel(score) {
+    if (score >= 90) return 'Excellent';
+    if (score >= 80) return 'Good';
+    if (score >= 70) return 'Pass';
+    return 'Fail';
+  }
+
   return (
-    <div style={{...box, backgroundColor: "#0f172a", color: "white", minHeight: "100vh"}}>
-      <h2 style={{color: "#ff6b35", fontSize: "2rem", marginBottom: "20px"}}>Blockchain Records (Mock)</h2>
-      <p style={{color: "rgba(255, 255, 255, 0.8)", fontSize: "1.1rem", marginBottom: "30px"}}>Each issued credential is recorded with a pseudo TxID to simulate immutability.</p>
-      <ul style={{ paddingLeft: 18 }}>
-        {txs.length === 0 && <li style={{color: "rgba(255, 255, 255, 0.6)", fontSize: "1.1rem"}}>No transactions yet.</li>}
-        {txs.map(tx => (
-          <li key={tx.txId} style={{color: "white", margin: "10px 0", padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.1)", borderRadius: "8px"}}>
-            <code style={{backgroundColor: "rgba(255, 255, 255, 0.2)", padding: "2px 6px", borderRadius: "4px"}}>{tx.txId}</code> — {tx.studentName} / {tx.skillName} / score {tx.score}
-          </li>
-        ))}
-      </ul>
+    <div className={styles.blockchainContainer}>
+      <div className={styles.header}>
+        <h2>🔗 Blockchain Records</h2>
+        <p>Each issued credential is recorded with a unique transaction ID to simulate blockchain immutability and tamper-proof verification.</p>
+      </div>
+
+      <div className={styles.recordsList}>
+        {txs.length === 0 ? (
+          <div className={styles.emptyState}>
+            <span className={styles.emptyIcon}>📋</span>
+            <p>No transactions recorded yet.</p>
+            <p>Start by issuing credentials to see them appear here.</p>
+          </div>
+        ) : (
+          <ul className={styles.transactionList}>
+            {txs.map(tx => (
+              <li key={tx.txId} className={styles.transactionItem}>
+                <div className={styles.transactionInfo}>
+                  <div className={styles.txId}>{tx.txId}</div>
+                  <div className={styles.credentialDetails}>
+                    <div className={styles.studentName}>{tx.studentName}</div>
+                    <div className={styles.skillInfo}>
+                      {tx.skillName} • Issued {new Date(tx.timestamp).toLocaleDateString()}
+                    </div>
+                  </div>
+                </div>
+                <div className={`${styles.scoreBadge} ${styles[getScoreClass(tx.score)]}`}>
+                  {tx.score}%
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className={styles.legend}>
+        <h3>Score Legend</h3>
+        <div className={styles.legendItems}>
+          <div className={styles.legendItem}>
+            <div className={`${styles.colorIndicator} ${styles.excellent}`}></div>
+            <div className={styles.label}>Excellent (90%+)</div>
+          </div>
+          <div className={styles.legendItem}>
+            <div className={`${styles.colorIndicator} ${styles.good}`}></div>
+            <div className={styles.label}>Good (80-89%)</div>
+          </div>
+          <div className={styles.legendItem}>
+            <div className={`${styles.colorIndicator} ${styles.pass}`}></div>
+            <div className={styles.label}>Pass (70-79%)</div>
+          </div>
+            <div className={styles.legendItem}>
+              <div className={`${styles.colorIndicator} ${styles.fail}`}></div>
+              <div className={styles.label}>Fail (&lt;70%)</div>
+            </div>
+        </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+        <Link to="/provider/dashboard" style={{
+          display: 'inline-block',
+          padding: '12px 24px',
+          backgroundColor: '#2e86ab',
+          color: 'white',
+          textDecoration: 'none',
+          borderRadius: '8px'
+        }}>
+          Back to Dashboard
+        </Link>
+      </div>
     </div>
   );
 }
-// Basic styles only
-const box = { padding: 20 };

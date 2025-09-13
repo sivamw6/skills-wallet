@@ -1,0 +1,41 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: $spacing-8 0;
+
+  &.default {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  &.gradient {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.dividerText {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 $spacing-4;
+  font-size: $font-size-sm;
+  position: relative;
+  z-index: 1;
+}
+
+.dividerLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: -1;
+
+  .default & {
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  }
+
+  .gradient & {
+    background: linear-gradient(90deg, transparent 0%, rgba(78, 205, 196, 0.5) 50%, transparent 100%);
+  }
+}
