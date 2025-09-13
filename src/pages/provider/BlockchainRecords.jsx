@@ -1,19 +1,27 @@
 import { listChainTx } from "../../service/mockAPI";
-import { Link } from "react-router-dom";
-import styles from "./BlockchainRecords.module.scss";
+import { useNavigate } from "react-router-dom";
+import { 
+  Button, 
+  Card, 
+  Typography, 
+  Container, 
+  Badge,
+  Grid
+} from "../../components/ui";
 
 /**
  * Blockchain Records Page - Shows mock blockchain transaction history
  * Displays all issued credentials with their transaction IDs
  */
 export default function BlockchainRecords() {
+  const navigate = useNavigate();
   const txs = listChainTx();
 
-  function getScoreClass(score) {
-    if (score >= 90) return 'excellent';
-    if (score >= 80) return 'good';
-    if (score >= 70) return 'pass';
-    return 'fail';
+  function getScoreVariant(score) {
+    if (score >= 90) return 'success';
+    if (score >= 80) return 'success';
+    if (score >= 70) return 'warning';
+    return 'error';
   }
 
   function getScoreLabel(score) {
@@ -24,75 +32,150 @@ export default function BlockchainRecords() {
   }
 
   return (
-    <div className={styles.blockchainContainer}>
-      <div className={styles.header}>
-        <h2>🔗 Blockchain Records</h2>
-        <p>Each issued credential is recorded with a unique transaction ID to simulate blockchain immutability and tamper-proof verification.</p>
-      </div>
-
-      <div className={styles.recordsList}>
-        {txs.length === 0 ? (
-          <div className={styles.emptyState}>
-            <span className={styles.emptyIcon}>📋</span>
-            <p>No transactions recorded yet.</p>
-            <p>Start by issuing credentials to see them appear here.</p>
-          </div>
-        ) : (
-          <ul className={styles.transactionList}>
-            {txs.map(tx => (
-              <li key={tx.txId} className={styles.transactionItem}>
-                <div className={styles.transactionInfo}>
-                  <div className={styles.txId}>{tx.txId}</div>
-                  <div className={styles.credentialDetails}>
-                    <div className={styles.studentName}>{tx.studentName}</div>
-                    <div className={styles.skillInfo}>
-                      {tx.skillName} • Issued {new Date(tx.timestamp).toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
-                <div className={`${styles.scoreBadge} ${styles[getScoreClass(tx.score)]}`}>
-                  {tx.score}%
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      <div className={styles.legend}>
-        <h3>Score Legend</h3>
-        <div className={styles.legendItems}>
-          <div className={styles.legendItem}>
-            <div className={`${styles.colorIndicator} ${styles.excellent}`}></div>
-            <div className={styles.label}>Excellent (90%+)</div>
-          </div>
-          <div className={styles.legendItem}>
-            <div className={`${styles.colorIndicator} ${styles.good}`}></div>
-            <div className={styles.label}>Good (80-89%)</div>
-          </div>
-          <div className={styles.legendItem}>
-            <div className={`${styles.colorIndicator} ${styles.pass}`}></div>
-            <div className={styles.label}>Pass (70-79%)</div>
-          </div>
-            <div className={styles.legendItem}>
-              <div className={`${styles.colorIndicator} ${styles.fail}`}></div>
-              <div className={styles.label}>Fail (&lt;70%)</div>
-            </div>
+    <Container variant="default" size="lg" fullHeight>
+      {/* Header */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'flex-start',
+        marginBottom: '3rem',
+        flexWrap: 'wrap',
+        gap: '1rem'
+      }}>
+        <div>
+          <Typography variant="h1" gradient primary>
+            🔗 Blockchain Records
+          </Typography>
+          <Typography variant="body" color="white" style={{ marginTop: '0.5rem' }}>
+            Each issued credential is recorded with a unique transaction ID to simulate blockchain immutability and tamper-proof verification.
+          </Typography>
         </div>
       </div>
 
+      {/* Records List */}
+      <Card variant="glass" size="lg" spacing="lg">
+        <Typography variant="h2" color="white" style={{ marginBottom: '2rem' }}>
+          Transaction History
+        </Typography>
+        
+        {txs.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0' }}>
+            <Typography variant="h2" style={{ marginBottom: '1rem' }}>📋</Typography>
+            <Typography variant="body" color="white" style={{ marginBottom: '0.5rem' }}>
+              No transactions recorded yet.
+            </Typography>
+            <Typography variant="body" color="white">
+              Start by issuing credentials to see them appear here.
+            </Typography>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {txs.map(tx => (
+              <Card key={tx.txId} variant="dark" style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                padding: '1.5rem'
+              }}>
+                <div style={{ flex: 1 }}>
+                  <Typography variant="body" color="primary" style={{ 
+                    fontFamily: 'monospace',
+                    marginBottom: '0.5rem',
+                    wordBreak: 'break-all'
+                  }}>
+                    {tx.txId}
+                  </Typography>
+                  <Typography 
+                    variant="h5" 
+                    color="primary" 
+                    style={{ 
+                      marginBottom: '0.5rem',
+                      cursor: 'pointer',
+                      textDecoration: 'underline'
+                    }}
+                    onClick={() => navigate(`/provider/student/${tx.studentId}`)}
+                  >
+                    {tx.studentName}
+                  </Typography>
+                  <Typography variant="body" color="gray">
+                    {tx.assessmentId} • Issued {new Date(tx.timestamp).toLocaleDateString()}
+                  </Typography>
+                </div>
+                <Badge 
+                  variant={getScoreVariant(tx.score)}
+                  size="lg"
+                >
+                  {tx.score}%
+                </Badge>
+              </Card>
+            ))}
+          </div>
+        )}
+      </Card>
+
+      {/* Score Legend */}
+      <Card variant="glass" size="lg" spacing="lg" style={{ marginTop: '2rem' }}>
+        <Typography variant="h3" color="white" style={{ marginBottom: '1.5rem' }}>
+          Score Legend
+        </Typography>
+        <Grid columns={4} gap="md" responsive>
+          <Card variant="dark" size="sm">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ 
+                width: '12px', 
+                height: '12px', 
+                borderRadius: '50%', 
+                background: '#10b981' 
+              }}></div>
+              <Typography variant="body" color="white">Excellent (90%+)</Typography>
+            </div>
+          </Card>
+          <Card variant="dark" size="sm">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ 
+                width: '12px', 
+                height: '12px', 
+                borderRadius: '50%', 
+                background: '#10b981' 
+              }}></div>
+              <Typography variant="body" color="white">Good (80-89%)</Typography>
+            </div>
+          </Card>
+          <Card variant="dark" size="sm">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ 
+                width: '12px', 
+                height: '12px', 
+                borderRadius: '50%', 
+                background: '#f59e0b' 
+              }}></div>
+              <Typography variant="body" color="white">Pass (70-79%)</Typography>
+            </div>
+          </Card>
+          <Card variant="dark" size="sm">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ 
+                width: '12px', 
+                height: '12px', 
+                borderRadius: '50%', 
+                background: '#ef4444' 
+              }}></div>
+              <Typography variant="body" color="white">Fail (&lt;70%)</Typography>
+            </div>
+          </Card>
+        </Grid>
+      </Card>
+
+      {/* Back Button */}
       <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <Link to="/provider/dashboard" style={{
-          display: 'inline-block',
-          padding: '12px 24px',
-          backgroundColor: '#2e86ab',
-          color: 'white',
-          textDecoration: 'none',
-          borderRadius: '8px'
-        }}>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => navigate("/provider/dashboard")}
+        >
           Back to Dashboard
-        </Link>
+        </Button>
       </div>
-    </div>
+    </Container>
   );
 }

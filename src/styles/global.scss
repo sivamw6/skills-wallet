@@ -20,8 +20,8 @@ html {
 body {
   font-family: $font-family-primary;
   line-height: $line-height-normal;
-  color: $gray-800;
-  background-color: $gray-50;
+  color: rgba(255, 255, 255, 0.9); // 默認文字使用90%透明度的白色
+  background: $digital-dark; // 深色背景
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -30,7 +30,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-weight: $font-weight-bold;
   line-height: $line-height-tight;
-  color: $gray-900;
+  color: white; // 標題使用白色
 }
 
 h1 {
@@ -60,6 +60,7 @@ h6 {
 p {
   margin-bottom: $spacing-4;
   line-height: $line-height-relaxed;
+  color: rgba(255, 255, 255, 0.9); // p元素使用90%透明度的白色
 }
 
 // Links

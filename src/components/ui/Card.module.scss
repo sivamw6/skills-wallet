@@ -5,29 +5,61 @@
   border-radius: $radius-3xl;
   transition: all $transition-base;
   position: relative;
+  
+  // 統一Card間距 - 確保Card之間有適當的間距
+  margin-bottom: $spacing-6;
+  
+  // 確保同類型Card的最小高度一致
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
 
   // Size variants
   &.sm {
     padding: $spacing-4;
+    min-height: 150px;
   }
 
   &.md {
     padding: $spacing-6;
+    min-height: 200px;
   }
 
   &.lg {
     padding: $spacing-8;
+    min-height: 250px;
+  }
+
+  &.spacing-none {
+    margin-bottom: 0;
+  }
+
+  &.spacing-sm {
+    margin: $spacing-3;
+  }
+
+  &.spacing-md {
+    margin: $spacing-6;
+  }
+
+  &.spacing-lg {
+    margin: $spacing-8;
+  }
+
+  &.spacing-xl {
+    margin: $spacing-10;
   }
 
   // Variant styles
   &.default {
     @include card-style($spacing-6);
-    border: 1px solid $gray-200;
-    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   &.glass {
-    @include glass-effect(0.9);
+    @include glass-effect(0.1);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 

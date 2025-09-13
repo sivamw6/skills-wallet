@@ -1,7 +1,18 @@
 import { useState, useEffect } from "react";
-import { issueCredential, getAssessment } from "../../service/mockAPI";
+import { issueCredential } from "../../service/mockAPI";
 import { useNavigate, useLocation } from "react-router-dom";
-import styles from "./IssueCredential.module.scss";
+import { 
+  Button, 
+  Card, 
+  Typography, 
+  Container, 
+  Input,
+  Select,
+  FormGroup,
+  Grid,
+  Badge,
+  Divider
+} from "../../components/ui";
 
 /**
  * Issue Credential Page - Education Provider issues credentials after assessment
@@ -17,8 +28,8 @@ export default function IssueCredential() {
   const [isIssued, setIsIssued] = useState(false);
   const [issuedCredential, setIssuedCredential] = useState(null);
 
-  // Get assessment data
-  const assessment = getAssessment(assessmentId);
+  // Get assessment data (for future use)
+  // const assessment = getAssessment(assessmentId);
 
   // Handle data from assessment completion
   useEffect(() => {
@@ -56,151 +67,221 @@ export default function IssueCredential() {
   }
 
   return (
-    <div className={styles.issueContainer}>
-      <div className={styles.header}>
-        <h1>🎓 Issue Digital Credential</h1>
-        <p>Create and issue a blockchain-verified digital credential for a student's assessment completion.</p>
+    <Container variant="default" size="lg" fullHeight>
+      {/* Header */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'flex-start',
+        marginBottom: '3rem',
+        flexWrap: 'wrap',
+        gap: '1rem'
+      }}>
+        <div>
+          <Typography variant="h1" gradient primary>
+            🎓 Issue Digital Credential
+          </Typography>
+          <Typography variant="body" color="white" style={{ marginTop: '0.5rem' }}>
+            Create and issue a blockchain-verified digital credential for a student's assessment completion.
+          </Typography>
+        </div>
       </div>
 
       {!isIssued ? (
-        <div className={styles.formContainer}>
-          <div className={styles.formHeader}>
-            <h2>Credential Details</h2>
-            <p>Fill in the student information and assessment details to issue a credential.</p>
-          </div>
+        <Card variant="glass" size="lg" spacing="lg">
+          <Typography variant="h2" color="white" style={{ marginBottom: '1rem' }}>
+            Credential Details
+          </Typography>
+          <Typography variant="body" color="white" style={{ marginBottom: '2rem' }}>
+            Fill in the student information and assessment details to issue a credential.
+          </Typography>
 
           <form onSubmit={handleIssueCredential}>
-            <div className={styles.formGrid}>
-              <div className={styles.formGroup}>
-                <label htmlFor="studentId">Student ID</label>
-                <input
+            <Grid columns={2} gap="lg" responsive style={{ marginBottom: '2rem' }}>
+              <FormGroup label="Student ID">
+                <Input
+                  variant="dark"
+                  size="lg"
                   type="text"
-                  id="studentId"
                   value={studentId}
                   onChange={(e) => setStudentId(e.target.value)}
                   placeholder="Enter student ID"
                   required
                 />
-              </div>
+              </FormGroup>
 
-              <div className={styles.formGroup}>
-                <label htmlFor="studentName">Student Name</label>
-                <input
+              <FormGroup label="Student Name">
+                <Input
+                  variant="dark"
+                  size="lg"
                   type="text"
-                  id="studentName"
                   value={studentName}
                   onChange={(e) => setStudentName(e.target.value)}
                   placeholder="Enter student name"
                   required
                 />
-              </div>
+              </FormGroup>
 
-              <div className={styles.formGroup}>
-                <label htmlFor="assessmentId">Assessment ID</label>
-                <select
-                  id="assessmentId"
+              <FormGroup label="Assessment ID">
+                <Select
+                  variant="dark"
+                  size="lg"
                   value={assessmentId}
                   onChange={(e) => setAssessmentId(e.target.value)}
                 >
                   <option value="assess_001">Assessment 001 - Basic Skills</option>
                   <option value="assess_002">Assessment 002 - Advanced Topics</option>
                   <option value="assess_003">Assessment 003 - Practical Application</option>
-                </select>
-              </div>
-            </div>
+                </Select>
+              </FormGroup>
+            </Grid>
 
-            <div className={styles.scoreSection}>
-              <h3>Assessment Score</h3>
+            <Divider />
+
+            <Card variant="dark" style={{ marginBottom: '2rem' }}>
+              <Typography variant="h3" color="white" style={{ marginBottom: '1rem' }}>
+                Assessment Score
+              </Typography>
               {score !== null ? (
-                <div className={styles.scoreDisplay}>
-                  <div className={styles.scoreValue}>{score}%</div>
-                  <div className={styles.scoreLabel}>Final Score</div>
+                <div style={{ textAlign: 'center', padding: '2rem' }}>
+                  <Badge 
+                    variant={score >= 70 ? 'success' : score >= 50 ? 'warning' : 'error'} 
+                    size="lg"
+                    style={{ marginBottom: '1rem', display: 'block', fontSize: '2rem' }}
+                  >
+                    {score}%
+                  </Badge>
+                  <Typography variant="body" color="white">Final Score</Typography>
                 </div>
               ) : (
-                <div className={styles.manualScore}>
-                  <label>Manual Score:</label>
-                  <input
+                <FormGroup label="Manual Score">
+                  <Input
+                    variant="dark"
+                    size="lg"
                     type="number"
                     min="0"
                     max="100"
                     placeholder="0-100"
                     onChange={handleManualScoreChange}
                   />
-                </div>
+                </FormGroup>
               )}
-            </div>
+            </Card>
 
-            <div className={styles.actionButtons}>
-              <button type="submit" className={styles.primaryButton}>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+              >
                 Issue Credential
-              </button>
-              <button 
+              </Button>
+              <Button 
                 type="button" 
+                variant="secondary"
+                size="lg"
                 onClick={() => navigate("/provider/dashboard")}
-                className={styles.secondaryButton}
               >
                 Back to Dashboard
-              </button>
+              </Button>
             </div>
           </form>
-        </div>
+        </Card>
       ) : (
-        <div className={styles.credentialDisplay}>
-          <h3>✅ Credential Successfully Issued!</h3>
+        <Card variant="glass" size="lg" spacing="lg">
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <Typography variant="h2" color="success" style={{ marginBottom: '1rem' }}>
+              ✅ Credential Successfully Issued!
+            </Typography>
+          </div>
           
-          <div className={styles.credentialInfo}>
-            <div className={styles.infoItem}>
-              <div className={styles.label}>Student Name</div>
-              <div className={styles.value}>{issuedCredential.studentName}</div>
-            </div>
-            <div className={styles.infoItem}>
-              <div className={styles.label}>Student ID</div>
-              <div className={styles.value}>{issuedCredential.studentId}</div>
-            </div>
-            <div className={styles.infoItem}>
-              <div className={styles.label}>Assessment</div>
-              <div className={styles.value}>{issuedCredential.assessmentId}</div>
-            </div>
-            <div className={styles.infoItem}>
-              <div className={styles.label}>Credential ID</div>
-              <div className={styles.value}>{issuedCredential.credentialId}</div>
-            </div>
-            <div className={styles.infoItem}>
-              <div className={styles.label}>Issue Date</div>
-              <div className={styles.value}>{new Date(issuedCredential.timestamp).toLocaleDateString()}</div>
-            </div>
-            <div className={`${styles.infoItem} ${styles.score}`}>
-              <div className={styles.label}>Score</div>
-              <div className={styles.value}>{issuedCredential.score}%</div>
-            </div>
-          </div>
+          <Grid columns={2} gap="lg" responsive style={{ marginBottom: '2rem' }}>
+            <Card variant="dark" size="sm">
+              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Student Name:</Typography>
+              <Typography 
+                variant="h5" 
+                color="primary" 
+                style={{ 
+                  cursor: 'pointer',
+                  textDecoration: 'underline'
+                }}
+                onClick={() => navigate(`/provider/student/${issuedCredential.studentId}`)}
+              >
+                {issuedCredential.studentName}
+              </Typography>
+            </Card>
+            <Card variant="dark" size="sm">
+              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Student ID:</Typography>
+              <Typography variant="h5" color="white">{issuedCredential.studentId}</Typography>
+            </Card>
+            <Card variant="dark" size="sm">
+              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Assessment:</Typography>
+              <Typography variant="h5" color="white">{issuedCredential.assessmentId}</Typography>
+            </Card>
+            <Card variant="dark" size="sm">
+              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Credential ID:</Typography>
+              <Typography variant="h5" color="white">{issuedCredential.credentialId}</Typography>
+            </Card>
+            <Card variant="dark" size="sm">
+              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Issue Date:</Typography>
+              <Typography variant="h5" color="white">{new Date(issuedCredential.timestamp).toLocaleDateString()}</Typography>
+            </Card>
+            <Card variant="dark" size="sm">
+              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Score:</Typography>
+              <Badge 
+                variant={issuedCredential.score >= 70 ? 'success' : issuedCredential.score >= 50 ? 'warning' : 'error'} 
+                size="lg"
+              >
+                {issuedCredential.score}%
+              </Badge>
+            </Card>
+          </Grid>
 
-          <div className={styles.txInfo}>
-            <div className={styles.label}>Blockchain Transaction ID</div>
-            <div className={styles.txId}>{issuedCredential.txId}</div>
-          </div>
+          <Card variant="glass" size="sm" style={{ marginBottom: '2rem' }}>
+            <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Blockchain Transaction ID:</Typography>
+            <Typography variant="h5" color="primary" style={{ 
+              fontFamily: 'monospace',
+              wordBreak: 'break-all',
+              background: 'rgba(78, 205, 196, 0.1)',
+              padding: '0.5rem',
+              borderRadius: '0.5rem',
+              border: '1px solid rgba(78, 205, 196, 0.2)'
+            }}>
+              {issuedCredential.txId}
+            </Typography>
+          </Card>
 
-          <div className={styles.successMessage}>
-            <span className={styles.icon}>🔗</span>
-            <span>This credential has been recorded on the blockchain and is now verifiable by any HR department.</span>
-          </div>
+          <Card variant="glass" size="sm" style={{ 
+            background: 'rgba(16, 185, 129, 0.1)',
+            border: '1px solid rgba(16, 185, 129, 0.3)',
+            marginBottom: '2rem'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <Typography variant="h3">🔗</Typography>
+              <Typography variant="body" color="white">
+                This credential has been recorded on the blockchain and is now verifiable by any HR department.
+              </Typography>
+            </div>
+          </Card>
 
-          <div className={styles.actionButtons}>
-            <button 
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Button 
+              variant="primary"
+              size="lg"
               onClick={() => navigate("/provider/dashboard")}
-              className={styles.primaryButton}
             >
               Back to Dashboard
-            </button>
-            <button 
+            </Button>
+            <Button 
+              variant="secondary"
+              size="lg"
               onClick={() => navigate("/provider/chain")}
-              className={styles.secondaryButton}
             >
               View All Records
-            </button>
+            </Button>
           </div>
-        </div>
+        </Card>
       )}
-    </div>
+    </Container>
   );
 }

@@ -4,6 +4,8 @@
 .container {
   position: relative;
   overflow: hidden;
+  max-width: 1200px; // 限制最大寬度，避免在大螢幕上過寬
+  margin: 0 auto; // 置中對齊
 
   // Size variants
   &.sm {

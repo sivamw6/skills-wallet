@@ -59,7 +59,7 @@ export default function ProviderDashboard() {
             <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
               Available Assessments
             </Typography>
-            <Typography variant="body" color="gray">
+            <Typography variant="body" color="white">
               Total assessments in system
             </Typography>
           </div>
@@ -73,7 +73,7 @@ export default function ProviderDashboard() {
             <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
               Issued Credentials
             </Typography>
-            <Typography variant="body" color="gray">
+            <Typography variant="body" color="white">
               Total credentials issued
             </Typography>
           </div>
@@ -87,7 +87,7 @@ export default function ProviderDashboard() {
             <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
               Passed Students
             </Typography>
-            <Typography variant="body" color="gray">
+            <Typography variant="body" color="white">
               Students with passing scores
             </Typography>
           </div>
@@ -100,10 +100,10 @@ export default function ProviderDashboard() {
           <div style={{ textAlign: 'center' }}>
             <Typography variant="h2" style={{ marginBottom: '1rem' }}>📝</Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
-              Create Assessment
+              Take Assessment
             </Typography>
-            <Typography variant="body" color="gray" style={{ marginBottom: '1.5rem' }}>
-              Set up a new assessment with custom questions for your students.
+            <Typography variant="body" color="white" style={{ marginBottom: '1.5rem' }}>
+              Complete an existing assessment to earn digital credentials.
             </Typography>
             <Button variant="primary" fullWidth as={Link} to="/assessment">
               Start Assessment
@@ -117,7 +117,7 @@ export default function ProviderDashboard() {
             <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
               Issue Credential
             </Typography>
-            <Typography variant="body" color="gray" style={{ marginBottom: '1.5rem' }}>
+            <Typography variant="body" color="white" style={{ marginBottom: '1.5rem' }}>
               Issue a digital credential for a completed assessment.
             </Typography>
             <Button variant="primary" fullWidth as={Link} to="/provider/issue">
@@ -132,7 +132,7 @@ export default function ProviderDashboard() {
             <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
               Blockchain Records
             </Typography>
-            <Typography variant="body" color="gray" style={{ marginBottom: '1.5rem' }}>
+            <Typography variant="body" color="white" style={{ marginBottom: '1.5rem' }}>
               View all issued credentials recorded on the blockchain.
             </Typography>
             <Button variant="primary" fullWidth as={Link} to="/provider/chain">
@@ -154,7 +154,7 @@ export default function ProviderDashboard() {
             <Typography variant="body" color="white" style={{ marginBottom: '0.5rem' }}>
               No credentials issued yet.
             </Typography>
-            <Typography variant="body" color="gray">
+            <Typography variant="body" color="white">
               Start by creating an assessment or issuing a credential manually.
             </Typography>
           </div>
@@ -162,31 +162,57 @@ export default function ProviderDashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {credentials.slice(0, 5).map(cred => (
               <Card key={cred.credentialId} variant="dark" style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center',
                 padding: '1.5rem'
               }}>
-                <div>
-                  <Typography variant="h5" color="white" style={{ marginBottom: '0.5rem' }}>
-                    {cred.studentName}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                  <div style={{ flex: 1 }}>
+                    <Typography 
+                      variant="h5" 
+                      color="primary" 
+                      style={{ 
+                        marginBottom: '0.5rem',
+                        cursor: 'pointer',
+                        textDecoration: 'underline'
+                      }}
+                      onClick={() => navigate(`/provider/student/${cred.studentId}`)}
+                    >
+                      {cred.studentName}
+                    </Typography>
+                    <Typography variant="body" color="white" style={{ marginBottom: '0.25rem' }}>
+                      <strong>Assessment:</strong> {cred.assessmentId}
+                    </Typography>
+                    <Typography variant="body" color="white" style={{ marginBottom: '0.25rem' }}>
+                      <strong>Student ID:</strong> {cred.studentId}
+                    </Typography>
+                    <Typography variant="body" color="white">
+                      <strong>Issued:</strong> {new Date(cred.timestamp).toLocaleDateString()}
+                    </Typography>
+                  </div>
+                  <Badge 
+                    variant={cred.score >= 70 ? 'success' : cred.score >= 50 ? 'warning' : 'error'}
+                    size="lg"
+                  >
+                    {cred.score}%
+                  </Badge>
+                </div>
+                
+                <div style={{ 
+                  background: 'rgba(78, 205, 196, 0.1)',
+                  padding: '0.75rem',
+                  borderRadius: '0.5rem',
+                  border: '1px solid rgba(78, 205, 196, 0.2)'
+                }}>
+                  <Typography variant="body" color="gray" style={{ marginBottom: '0.25rem', fontSize: '0.875rem' }}>
+                    <strong>Transaction ID (Token):</strong>
                   </Typography>
-                  <Typography variant="body" color="gray" style={{ marginBottom: '0.25rem' }}>
-                    <strong>Assessment:</strong> {cred.assessmentId}
-                  </Typography>
-                  <Typography variant="body" color="gray" style={{ marginBottom: '0.25rem' }}>
-                    <strong>Student ID:</strong> {cred.studentId}
-                  </Typography>
-                  <Typography variant="body" color="gray">
-                    <strong>Issued:</strong> {new Date(cred.timestamp).toLocaleDateString()}
+                  <Typography variant="body" color="primary" style={{ 
+                    fontFamily: 'monospace',
+                    fontSize: '0.875rem',
+                    wordBreak: 'break-all'
+                  }}>
+                    {cred.txId}
                   </Typography>
                 </div>
-                <Badge 
-                  variant={cred.score >= 70 ? 'success' : cred.score >= 50 ? 'warning' : 'error'}
-                  size="lg"
-                >
-                  {cred.score}%
-                </Badge>
               </Card>
             ))}
           </div>

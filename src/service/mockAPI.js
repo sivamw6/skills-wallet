@@ -13,28 +13,32 @@ let chainTx = []; // "Blockchain" transaction log
 const mockQuestions = [
   {
     questionId: "q1",
-    text: "2, 4, 8, 16, ?",
-    options: ["20", "32", "18"],
-    correctAnswer: "32",
+    text: "What will be the output of the following Python code?\nprint(2 + 3 * 4)",
+    options: ["14", "20", "11"],
+    correctAnswer: "14",
   },
   {
     questionId: "q2",
-    text: "Which is a prime number?",
-    options: ["13", "21", "1"],
-    correctAnswer: "13",
+    text: "Which Python data type is mutable?",
+    options: ["string", "tuple", "list"],
+    correctAnswer: "list",
   },
   {
     questionId: "q3",
-    text: "Sort ascending: [7, 2, 5]",
-    options: ["[7,5,2]", "[5,7,2]", "[2,5,7]"],
-    correctAnswer: "[2,5,7]",
+    text: "What is the correct way to create a dictionary in Python?",
+    options: [
+      "dict = {key: value}",
+      "dict = [key: value]",
+      "dict = (key: value)",
+    ],
+    correctAnswer: "dict = {key: value}",
   },
 ];
 
 // Initialize with a default assessment
 const defaultAssessment = {
   assessmentId: "assess_001",
-  title: "Logical Reasoning Assessment",
+  title: "Python Programming Assessment",
   questions: mockQuestions,
 };
 assessments.push(defaultAssessment);
@@ -135,16 +139,32 @@ export function getTransaction(txId) {
 }
 
 /**
- * Verifier Functions
+ * Verifier Functions - Aligned with UML Model
  */
 export function verifyByTxId(txId) {
   const found = getTransaction(txId);
-  if (!found) return { ok: false, error: "Transaction not found" };
-  return { ok: true, data: found };
+  if (!found) {
+    return {
+      valid: false,
+      error: "Transaction not found or invalid",
+    };
+  }
+  return {
+    valid: true,
+    credential: found,
+  };
 }
 
 export function verifyByCredentialId(credentialId) {
   const found = getCredential(credentialId);
-  if (!found) return { ok: false, error: "Credential not found" };
-  return { ok: true, data: found };
+  if (!found) {
+    return {
+      valid: false,
+      error: "Credential not found or invalid",
+    };
+  }
+  return {
+    valid: true,
+    credential: found,
+  };
 }

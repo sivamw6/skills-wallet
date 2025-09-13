@@ -9,6 +9,7 @@ import styles from './Button.module.scss';
  * @param {boolean} disabled - Disabled state
  * @param {boolean} fullWidth - Full width button
  * @param {string} className - Additional CSS classes
+ * @param {React.Component} as - Component to render as (e.g., Link)
  * @param {React.ReactNode} children - Button content
  * @param {Object} props - Additional props
  */
@@ -19,6 +20,7 @@ export default function Button({
   disabled = false,
   fullWidth = false,
   className = '',
+  as: Component = 'button',
   children,
   ...props
 }) {
@@ -32,13 +34,13 @@ export default function Button({
   ].filter(Boolean).join(' ');
 
   return (
-    <button
+    <Component
       className={buttonClasses}
       disabled={disabled || loading}
       {...props}
     >
       {loading && <span className={styles.spinner}></span>}
       <span className={loading ? styles.loadingText : ''}>{children}</span>
-    </button>
+    </Component>
   );
 }

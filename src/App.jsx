@@ -4,13 +4,12 @@ import { useState, useMemo } from "react";
 
 // Pages
 import Login from "./pages/Login";
-import Assessment from "./pages/Assessment";
+import Assessment from "./pages/provider/Assessment";
 import ProviderDashboard from "./pages/provider/ProviderDashboard";
 import IssueCredential from "./pages/provider/IssueCredential";
 import BlockchainRecords from "./pages/provider/BlockchainRecords";
+import StudentDetail from "./pages/provider/StudentDetail";
 import VerifierDashboard from "./pages/verifier/VerifierDashboard";
-import Verify from "./pages/Verify";
-import DesignSystem from "./pages/DesignSystem";
 
 // A tiny in-memory auth context (PoC-level)
 export default function App() {
@@ -23,8 +22,15 @@ export default function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Assessment route (public) */}
-        <Route path="/assessment/:id?" element={<Assessment />} />
+        {/* Assessment route (protected) */}
+        <Route
+          path="/assessment/:id?"
+          element={
+            <RequireRole role="provider">
+              <Assessment />
+            </RequireRole>
+          }
+        />
 
         {/* Provider routes (protected) */}
         <Route
@@ -51,6 +57,14 @@ export default function App() {
             </RequireRole>
           }
         />
+        <Route
+          path="/provider/student/:studentId"
+          element={
+            <RequireRole role="provider">
+              <StudentDetail />
+            </RequireRole>
+          }
+        />
 
         {/* Verifier routes (protected) */}
         <Route
@@ -61,17 +75,6 @@ export default function App() {
             </RequireRole>
           }
         />
-        <Route
-          path="/verify"
-          element={
-            <RequireRole role="verifier">
-              <Verify />
-            </RequireRole>
-          }
-        />
-
-        {/* Design System Demo */}
-        <Route path="/design-system" element={<DesignSystem />} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />

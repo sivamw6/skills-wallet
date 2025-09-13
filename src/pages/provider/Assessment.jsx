@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getAssessment, evaluateAssessment } from "../service/mockAPI";
+import { getAssessment, evaluateAssessment } from "../../service/mockAPI";
 import { 
   Button, 
   Card, 
   Typography, 
   Container, 
   Badge 
-} from "../components/ui";
+} from "../../components/ui";
 
 /**
  * Assessment Page - Displays 3 MCQ questions and evaluates answers

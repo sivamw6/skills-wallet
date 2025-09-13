@@ -151,83 +151,47 @@ export default function Login() {
         <Divider text="or try demo accounts" />
 
         {/* Demo Section */}
-        <div>
-          <Typography variant="h4" color="white" centered>
-            Demo Accounts
-          </Typography>
-          
-          <Grid columns={2} gap="md" responsive>
-            <Card variant="dark" hover>
-              <Typography variant="h5" color="white">
-                Education Provider
-              </Typography>
-              <Typography variant="caption" color="gray">
-                Username: <code>admin</code>
-              </Typography>
-              <Typography variant="caption" color="gray">
-                Password: <code>admin123</code>
-              </Typography>
-              <Button
-                variant="success"
-                size="md"
-                fullWidth
-                onClick={() => handleDemoLogin("provider")}
-              >
-                Demo as Provider
-              </Button>
-            </Card>
+        <Grid columns={2} gap="md" responsive>
+          <Card variant="dark" hover>
+            <Typography variant="h5" color="white">
+              Education Provider
+            </Typography>
+            <Typography variant="caption" color="white">
+              Username: <code>admin</code>
+            </Typography>
+            <Typography variant="caption" color="white">
+              Password: <code>admin123</code>
+            </Typography>
+            <Button
+              variant="success"
+              size="md"
+              fullWidth
+              onClick={() => handleDemoLogin("provider")}
+            >
+              Demo as Provider
+            </Button>
+          </Card>
 
-            <Card variant="dark" hover>
-              <Typography variant="h5" color="white">
-                HR Verifier
-              </Typography>
-              <Typography variant="caption" color="gray">
-                Username: <code>verifier1</code>
-              </Typography>
-              <Typography variant="caption" color="gray">
-                Password: <code>verify123</code>
-              </Typography>
-              <Button
-                variant="success"
-                size="md"
-                fullWidth
-                onClick={() => handleDemoLogin("verifier")}
-              >
-                Demo as HR
-              </Button>
-            </Card>
-          </Grid>
-        </div>
-
-        {/* Help Section */}
-        <Card variant="dark">
-          <Typography variant="h5" color="white" centered>
-            Available Demo Accounts
-          </Typography>
-          
-          <Grid columns={2} gap="md" responsive>
-            <div>
-              <Typography variant="body" color="white">
-                Education Providers:
-              </Typography>
-              <ul>
-                <li>admin / admin123</li>
-                <li>teacher1 / teacher123</li>
-                <li>school / school123</li>
-              </ul>
-            </div>
-            <div>
-              <Typography variant="body" color="white">
-                HR Verifiers:
-              </Typography>
-              <ul>
-                <li>verifier1 / verify123</li>
-                <li>employer / employer123</li>
-                <li>recruiter / recruit123</li>
-              </ul>
-            </div>
-          </Grid>
-        </Card>
+          <Card variant="dark" hover>
+            <Typography variant="h5" color="white">
+              HR Verifier
+            </Typography>
+            <Typography variant="caption" color="white">
+              Username: <code>verifier1</code>
+            </Typography>
+            <Typography variant="caption" color="white">
+              Password: <code>verify123</code>
+            </Typography>
+            <Button
+              variant="success"
+              size="md"
+              fullWidth
+              onClick={() => handleDemoLogin("verifier")}
+            >
+              Demo as HR
+            </Button>
+          </Card>
+        </Grid>
       </Card>
     </Container>
   );
