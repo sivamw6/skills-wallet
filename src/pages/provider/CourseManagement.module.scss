@@ -1,0 +1,160 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.container {
+  min-height: 100vh;
+  padding: $spacing-6;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: $spacing-6;
+  margin-bottom: $spacing-8;
+}
+
+.gridCard {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-8;
+  
+  .titleSection {
+    h1 {
+      margin-bottom: $spacing-2;
+    }
+  }
+  
+  .actions {
+    display: flex;
+    gap: $spacing-4;
+  }
+}
+
+.sectionTitle {
+  margin-bottom: $spacing-6;
+  padding-bottom: $spacing-2;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  margin-bottom: $spacing-6;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.listItem {
+  padding: $spacing-4;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  &.selected {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: $primary-color;
+  }
+  
+  h4 {
+    margin-bottom: $spacing-1;
+    color: $primary-color;
+  }
+  
+  p {
+    margin-bottom: $spacing-2;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modalActions {
+  display: flex;
+  gap: $spacing-4;
+  justify-content: flex-end;
+  margin-top: $spacing-6;
+  padding-top: $spacing-4;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: $spacing-4;
+    align-items: flex-start;
+  }
+  
+  .gridContainer {
+    grid-template-columns: 1fr;
+    gap: $spacing-4;
+  }
+  
+  .gridCard {
+    min-height: 400px;
+  }
+  
+  .list {
+    max-height: 300px;
+  }
+  
+  .modalContent {
+    width: 95%;
+    margin: $spacing-4;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: $spacing-4;
+  }
+  
+  .gridContainer {
+    gap: $spacing-3;
+  }
+  
+  .gridCard {
+    min-height: 350px;
+  }
+}

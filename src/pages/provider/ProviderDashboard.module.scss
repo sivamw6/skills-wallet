@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+.actionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.actionCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.actionContent {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.actionDescription {
+  margin-bottom: auto;
+  flex: 1;
+}
+
+.actionButton {
+  margin-top: 1.5rem;
+}

@@ -1,6 +1,6 @@
 /**
  * API Specification for Digital Skills Wallet
- * Aligned with UML Class Diagram
+ * Aligned with updated UML Class Diagram
  */
 
 // ========================================
@@ -25,6 +25,10 @@ const loginResponse = {
     name: "Education Admin",
     role: "provider",
     publicKey: "public_key_here",
+    // Additional fields based on role
+    educationProviderId: "provider_001",
+    email: "admin@university.edu",
+    description: "University Education Provider",
   },
 };
 
@@ -33,7 +37,91 @@ const loginResponse = {
 // ========================================
 
 /**
- * POST /providers/assessments
+ * POST /providers/courses
+ * Create a new course
+ */
+const createCoursePayload = {
+  code: "CS101",
+  title: "Introduction to Computer Science",
+  description: "Basic computer science concepts and programming fundamentals",
+  publicKey: "course_public_key_here",
+};
+
+const createCourseResponse = {
+  success: true,
+  course: {
+    courseId: "course_001",
+    code: "CS101",
+    title: "Introduction to Computer Science",
+    description: "Basic computer science concepts and programming fundamentals",
+    publicKey: "course_public_key_here",
+  },
+};
+
+/**
+ * POST /providers/courses/{courseId}/units
+ * Create a new unit within a course
+ */
+const createUnitPayload = {
+  code: "CS101-01",
+  title: "Python Programming Basics",
+  description: "Introduction to Python programming language",
+};
+
+const createUnitResponse = {
+  success: true,
+  unit: {
+    unitId: "unit_001",
+    courseId: "course_001",
+    code: "CS101-01",
+    title: "Python Programming Basics",
+    description: "Introduction to Python programming language",
+  },
+};
+
+/**
+ * POST /providers/units/{unitId}/exams
+ * Create a new exam within a unit
+ */
+const createExamPayload = {
+  code: "CS101-01-EXAM",
+  title: "Python Programming Assessment",
+  description: "Comprehensive Python programming skills assessment",
+  publicKey: "exam_public_key_here",
+  score: 100,
+  questions: [
+    {
+      questionId: "q1",
+      text: "What will be the output of the following Python code?\nprint(2 + 3 * 4)",
+      options: ["14", "20", "11"],
+      correctAnswer: "14",
+    },
+  ],
+};
+
+const createExamResponse = {
+  success: true,
+  exam: {
+    examId: "exam_001",
+    unitId: "unit_001",
+    code: "CS101-01-EXAM",
+    title: "Python Programming Assessment",
+    description: "Comprehensive Python programming skills assessment",
+    publicKey: "exam_public_key_here",
+    score: 100,
+    questions: [
+      {
+        questionId: "q1",
+        text: "What will be the output of the following Python code?\nprint(2 + 3 * 4)",
+        options: ["14", "20", "11"],
+        correctAnswer: "14",
+      },
+    ],
+  },
+};
+
+/**
+ * POST /providers/assessments (Legacy - for backward compatibility)
  * Create a new assessment
  */
 const createAssessmentPayload = {
@@ -185,6 +273,76 @@ const verifyTransactionResponse = {
   },
 };
 
+/**
+ * GET /verifiers/students/{studentId}/credentials
+ * Get all credentials for a specific student
+ */
+const getStudentCredentialsResponse = {
+  success: true,
+  studentId: "student_001",
+  studentName: "John Doe",
+  totalCredentials: 3,
+  passedCredentials: 2,
+  averageScore: 78,
+  credentials: [
+    {
+      credentialId: "cred_001",
+      studentId: "student_001",
+      studentName: "John Doe",
+      assessmentId: "assess_001",
+      examId: "exam_001",
+      score: 85,
+      txId: "0x123abc456def",
+      timestamp: "2024-01-15T10:30:00Z",
+    },
+    {
+      credentialId: "cred_002",
+      studentId: "student_001",
+      studentName: "John Doe",
+      assessmentId: "assess_002",
+      examId: "exam_002",
+      score: 72,
+      txId: "0x456def789ghi",
+      timestamp: "2024-01-16T14:20:00Z",
+    },
+    {
+      credentialId: "cred_003",
+      studentId: "student_001",
+      studentName: "John Doe",
+      assessmentId: "assess_003",
+      examId: "exam_003",
+      score: 65,
+      txId: "0x789ghi012jkl",
+      timestamp: "2024-01-17T09:15:00Z",
+    },
+  ],
+};
+
+/**
+ * POST /verifiers/verify/token
+ * Verify a specific credential token (Transaction ID or Credential ID)
+ */
+const verifyTokenPayload = {
+  tokenId: "0x123abc456def", // Can be Transaction ID or Credential ID
+};
+
+const verifyTokenResponse = {
+  success: true,
+  valid: true,
+  credential: {
+    credentialId: "cred_003",
+    studentId: "student_001",
+    studentName: "John Doe",
+    assessmentId: "assess_002",
+    examId: "exam_002",
+    score: 85,
+    txId: "0x123abc456def",
+    timestamp: "2024-01-15T10:30:00Z",
+  },
+  tokenId: "0x123abc456def",
+  verificationDate: "2024-01-18T16:45:00Z",
+};
+
 // ========================================
 // BLOCKCHAIN ENDPOINTS
 // ========================================
@@ -222,11 +380,51 @@ const listTransactionsResponse = {
 };
 
 // ========================================
-// INSTRUCTOR ENDPOINTS (Future Extension)
+// INSTRUCTOR ENDPOINTS
 // ========================================
 
 /**
- * GET /instructors/{instructorId}/assessments
+ * POST /providers/{providerId}/instructors
+ * Create a new instructor
+ */
+const createInstructorPayload = {
+  name: "Dr. Jane Smith",
+  email: "jane.smith@university.edu",
+  password: "instructor123",
+  publicKey: "instructor_public_key_here",
+};
+
+const createInstructorResponse = {
+  success: true,
+  instructor: {
+    userId: "instructor_001",
+    providerId: "provider_001",
+    name: "Dr. Jane Smith",
+    email: "jane.smith@university.edu",
+    role: "instructor",
+    publicKey: "instructor_public_key_here",
+  },
+};
+
+/**
+ * GET /instructors/{instructorId}/exams
+ * Get exams assigned to instructor
+ */
+const instructorExamsResponse = {
+  success: true,
+  exams: [
+    {
+      examId: "exam_001",
+      title: "Python Programming Assessment",
+      unitId: "unit_001",
+      assignedBy: "provider_001",
+      dueDate: "2024-01-20T23:59:59Z",
+    },
+  ],
+};
+
+/**
+ * GET /instructors/{instructorId}/assessments (Legacy)
  * Get assessments assigned to instructor
  */
 const instructorAssessmentsResponse = {
@@ -246,13 +444,21 @@ export {
   loginPayload,
   loginResponse,
 
-  // Education Provider
+  // Education Provider - Courses
+  createCoursePayload,
+  createCourseResponse,
+  createUnitPayload,
+  createUnitResponse,
+  createExamPayload,
+  createExamResponse,
+
+  // Education Provider - Legacy
   createAssessmentPayload,
   createAssessmentResponse,
   issueCredentialPayload,
   issueCredentialResponse,
 
-  // Assessment
+  // Assessment/Exam
   getAssessmentResponse,
   evaluateAssessmentPayload,
   evaluateAssessmentResponse,
@@ -262,11 +468,17 @@ export {
   verifyCredentialResponse,
   verifyTransactionPayload,
   verifyTransactionResponse,
+  getStudentCredentialsResponse,
+  verifyTokenPayload,
+  verifyTokenResponse,
 
   // Blockchain
   getTransactionResponse,
   listTransactionsResponse,
 
-  // Instructor (Future)
+  // Instructor
+  createInstructorPayload,
+  createInstructorResponse,
+  instructorExamsResponse,
   instructorAssessmentsResponse,
 };

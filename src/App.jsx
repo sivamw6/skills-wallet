@@ -6,6 +6,7 @@ import { useState, useMemo } from "react";
 import Login from "./pages/Login";
 import Assessment from "./pages/provider/Assessment";
 import ProviderDashboard from "./pages/provider/ProviderDashboard";
+import CourseManagement from "./pages/provider/CourseManagement";
 import IssueCredential from "./pages/provider/IssueCredential";
 import BlockchainRecords from "./pages/provider/BlockchainRecords";
 import StudentDetail from "./pages/provider/StudentDetail";
@@ -38,6 +39,14 @@ export default function App() {
           element={
             <RequireRole role="provider">
               <ProviderDashboard />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="/provider/courses"
+          element={
+            <RequireRole role="provider">
+              <CourseManagement />
             </RequireRole>
           }
         />

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../App";
-import { listCredentials, listAssessments } from "../../service/mockAPI";
+import { listCredentials, listAssessments, listCourses, listUnits, listExams } from "../../service/mockAPI";
 import { 
   Button, 
   Card, 
@@ -9,6 +9,7 @@ import {
   Grid,
   Badge 
 } from "../../components/ui";
+import styles from "./ProviderDashboard.module.scss";
 
 /**
  * Education Provider Dashboard - Main hub for credential management
@@ -19,6 +20,9 @@ export default function ProviderDashboard() {
   const navigate = useNavigate();
   const credentials = listCredentials();
   const assessments = listAssessments();
+  const courses = listCourses();
+  const units = listUnits();
+  const exams = listExams();
 
   function handleLogout() {
     setSession(null);
@@ -50,17 +54,17 @@ export default function ProviderDashboard() {
       </div>
       
       {/* Stats Grid */}
-      <Grid columns={3} gap="lg" responsive style={{ marginBottom: '3rem' }}>
+      <Grid columns={4} gap="lg" responsive style={{ marginBottom: '3rem' }}>
         <Card variant="glass" hover>
           <div style={{ textAlign: 'center' }}>
             <Typography variant="h2" color="primary" style={{ marginBottom: '0.5rem' }}>
-              {assessments.length}
+              {courses.length}
             </Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
-              Available Assessments
+              Courses
             </Typography>
             <Typography variant="body" color="white">
-              Total assessments in system
+              Total courses available
             </Typography>
           </div>
         </Card>
@@ -68,6 +72,20 @@ export default function ProviderDashboard() {
         <Card variant="glass" hover>
           <div style={{ textAlign: 'center' }}>
             <Typography variant="h2" color="secondary" style={{ marginBottom: '0.5rem' }}>
+              {exams.length}
+            </Typography>
+            <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
+              Exams
+            </Typography>
+            <Typography variant="body" color="white">
+              Total exams available
+            </Typography>
+          </div>
+        </Card>
+        
+        <Card variant="glass" hover>
+          <div style={{ textAlign: 'center' }}>
+            <Typography variant="h2" color="success" style={{ marginBottom: '0.5rem' }}>
               {credentials.length}
             </Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
@@ -81,7 +99,7 @@ export default function ProviderDashboard() {
         
         <Card variant="glass" hover>
           <div style={{ textAlign: 'center' }}>
-            <Typography variant="h2" color="success" style={{ marginBottom: '0.5rem' }}>
+            <Typography variant="h2" color="warning" style={{ marginBottom: '0.5rem' }}>
               {credentials.filter(c => c.score >= 70).length}
             </Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
@@ -95,52 +113,67 @@ export default function ProviderDashboard() {
       </Grid>
 
       {/* Actions Grid */}
-      <Grid columns={3} gap="lg" responsive style={{ marginBottom: '3rem' }}>
-        <Card variant="glass" hover clickable>
-          <div style={{ textAlign: 'center' }}>
+      <div className={styles.actionsGrid}>
+        <Card variant="glass" hover clickable className={styles.actionCard}>
+          <div className={styles.actionContent}>
+            <Typography variant="h2" style={{ marginBottom: '1rem' }}>📚</Typography>
+            <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
+              Course Management
+            </Typography>
+            <Typography variant="body" color="white" className={styles.actionDescription}>
+              Manage courses, units, and exams in a structured hierarchy.
+            </Typography>
+            <Button variant="primary" fullWidth as={Link} to="/provider/courses" className={styles.actionButton}>
+              Manage Courses
+            </Button>
+          </div>
+        </Card>
+
+        <Card variant="glass" hover clickable className={styles.actionCard}>
+          <div className={styles.actionContent}>
             <Typography variant="h2" style={{ marginBottom: '1rem' }}>📝</Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
               Take Assessment
             </Typography>
-            <Typography variant="body" color="white" style={{ marginBottom: '1.5rem' }}>
+            <Typography variant="body" color="white" className={styles.actionDescription}>
               Complete an existing assessment to earn digital credentials.
             </Typography>
-            <Button variant="primary" fullWidth as={Link} to="/assessment">
+            <Button variant="primary" fullWidth as={Link} to="/assessment" className={styles.actionButton}>
               Start Assessment
             </Button>
           </div>
         </Card>
 
-        <Card variant="glass" hover clickable>
-          <div style={{ textAlign: 'center' }}>
+        <Card variant="glass" hover clickable className={styles.actionCard}>
+          <div className={styles.actionContent}>
             <Typography variant="h2" style={{ marginBottom: '1rem' }}>🎓</Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
               Issue Credential
             </Typography>
-            <Typography variant="body" color="white" style={{ marginBottom: '1.5rem' }}>
+            <Typography variant="body" color="white" className={styles.actionDescription}>
               Issue a digital credential for a completed assessment.
             </Typography>
-            <Button variant="primary" fullWidth as={Link} to="/provider/issue">
+            <Button variant="primary" fullWidth as={Link} to="/provider/issue" className={styles.actionButton}>
               Issue Credential
             </Button>
           </div>
         </Card>
 
-        <Card variant="glass" hover clickable>
-          <div style={{ textAlign: 'center' }}>
+        <Card variant="glass" hover clickable className={styles.actionCard}>
+          <div className={styles.actionContent}>
             <Typography variant="h2" style={{ marginBottom: '1rem' }}>🔗</Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
               Blockchain Records
             </Typography>
-            <Typography variant="body" color="white" style={{ marginBottom: '1.5rem' }}>
+            <Typography variant="body" color="white" className={styles.actionDescription}>
               View all issued credentials recorded on the blockchain.
             </Typography>
-            <Button variant="primary" fullWidth as={Link} to="/provider/chain">
+            <Button variant="primary" fullWidth as={Link} to="/provider/chain" className={styles.actionButton}>
               View Records
             </Button>
           </div>
         </Card>
-      </Grid>
+      </div>
 
       {/* Recent Credentials */}
       <Card variant="glass" size="lg">

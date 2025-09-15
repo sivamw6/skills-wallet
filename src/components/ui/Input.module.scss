@@ -1,6 +1,29 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-1;
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: white;
+  margin-bottom: $spacing-1;
+}
+
+.helperText {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: $spacing-1;
+  
+  &.error {
+    color: $error;
+  }
+}
+
 .input {
   @include input-style;
   transition: all $transition-base;
