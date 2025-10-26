@@ -98,7 +98,7 @@ export default function BlockchainRecords() {
                     {tx.studentName}
                   </Typography>
                   <Typography variant="body" color="gray">
-                    {tx.assessmentId} • Issued {new Date(tx.timestamp).toLocaleDateString()}
+                    {tx.examId} • Issued {new Date(tx.timestamp).toLocaleDateString()}
                   </Typography>
                 </div>
                 <Badge 

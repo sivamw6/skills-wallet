@@ -29,8 +29,7 @@ export default function Header({
     <div className={headerClasses} {...props}>
       <Typography 
         variant="h1" 
-        gradient={gradient} 
-        primary={gradient}
+        gradient={gradient}
       >
         {title}
       </Typography>

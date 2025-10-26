@@ -1,5 +1,6 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
 
 .button {
   @include flex-center;
@@ -64,8 +65,8 @@
 
     &:hover:not(:disabled) {
       @include hover-lift(-2px);
-      background: lighten($primary-blue, 10%);
-      border-color: lighten($primary-blue, 10%);
+      background: color.adjust($primary-blue, $lightness: 10%);
+      border-color: color.adjust($primary-blue, $lightness: 10%);
     }
   }
 
@@ -87,8 +88,8 @@
 
     &:hover:not(:disabled) {
       @include hover-lift(-2px);
-      background: darken($error, 10%);
-      border-color: darken($error, 10%);
+      background: color.adjust($error, $lightness: -10%);
+      border-color: color.adjust($error, $lightness: -10%);
       box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
     }
   }

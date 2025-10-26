@@ -1,5 +1,6 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
 
 .container {
   min-height: 100vh;
@@ -158,3 +159,98 @@
     min-height: 350px;
   }
 }
+
+// Exam buttons container
+.examButtons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+// Authentic exam info box
+.authenticExamInfo {
+  padding: 1rem;
+  background: rgba(78, 205, 196, 0.1);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.authenticExamTitle {
+  margin-bottom: 0.5rem;
+}
+
+.authenticExamDescription {
+  font-size: 0.9rem;
+}
+// New styles for enhanced exam management
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  
+  .sectionActions {
+    display: flex;
+    gap: 0.75rem;
+  }
+}
+
+.examSection {
+  flex: 1;
+  min-height: 400px;
+}
+
+.examActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.examActionButton {
+  width: 100%;
+}
+
+.moreIndicator {
+  text-align: center;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.examManagementModal {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 1200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-shrink: 0;
+  
+  .closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+.modalContent {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 400px;
+}
+
+.modalActions {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+

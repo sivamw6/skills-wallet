@@ -91,9 +91,9 @@ src/
 ## 👥 User Roles
 
 ### 🎓 Education Provider
-- **Permissions**: Issue credentials, manage assessments, view records
+- **Permissions**: Issue credentials, manage exams, view records
 - **Features**:
-  - Create and manage assessments
+  - Create and manage exams
   - Issue digital credentials
   - View all issued credentials
   - Manage student information
@@ -146,8 +146,8 @@ Provider Dashboard → View Records → Blockchain Records → View All Transact
 3. Fill in student information:
    - Student ID (required)
    - Student Name (required)
-   - Assessment ID (dropdown selection)
-   - Score (manual input or auto-filled from assessment results)
+   - Exam ID (dropdown selection)
+   - Score (manual input or auto-filled from exam results)
 4. Click "Issue Credential" button
 5. System generates Transaction ID (Token)
 6. Credential successfully issued, view detailed information
@@ -156,7 +156,7 @@ Provider Dashboard → View Records → Blockchain Records → View All Transact
 1. In Provider Dashboard's "Recently Issued Credentials" section
 2. Click any student's name (blue underlined text)
 3. Enter student detail page, view:
-   - Student statistics (total credentials, average score, passed assessments)
+   - Student statistics (total credentials, average score, passed exams)
    - All issued credentials
    - Complete blockchain transaction records
 
@@ -182,20 +182,20 @@ Login → Verifier Dashboard → Input Token → Verify → View Candidate Info
 
 **Verification Results Include:**
 - Candidate name and ID
-- Assessment information and score
+- Exam information and score
 - Credential issue date
 - Blockchain transaction ID
 - Credential validity confirmation
 
-### 📝 Taking Assessments
+### 📝 Taking Exams
 
-#### Assessment Flow
+#### Exam Flow
 ```
-Provider Dashboard → Take Assessment → Answer Python Questions → Get Score → Issue Credential
+Provider Dashboard → Take Exam → Answer Python Questions → Get Score → Issue Credential
 ```
 
-#### Python Assessment Content
-Assessment includes 3 Python programming fundamental questions:
+#### Python Exam Content
+Exam includes 3 Python programming fundamental questions:
 
 1. **Operator Precedence**
    - Question: Output result of `print(2 + 3 * 4)`
@@ -230,14 +230,14 @@ POST /providers/credentials
 {
   "studentId": "student_001",
   "studentName": "John Doe",
-  "assessmentId": "assess_001",
+  "examId": "exam_001",
   "score": 85
 }
 
-// Create assessment
-POST /providers/assessments
+// Create exam
+POST /providers/exams
 {
-  "title": "Python Programming Assessment",
+  "title": "Python Programming Exam",
   "questions": [...]
 }
 ```
@@ -274,18 +274,18 @@ GET /blockchain/transactions
   "credentialId": "cred_003",
   "studentId": "student_001",
   "studentName": "John Doe",
-  "assessmentId": "assess_001",
+  "examId": "exam_001",
   "score": 85,
   "txId": "0x123abc456def",
   "timestamp": "2024-01-15T10:30:00Z"
 }
 ```
 
-#### Assessment
+#### Exam
 ```javascript
 {
-  "assessmentId": "assess_001",
-  "title": "Python Programming Assessment",
+  "examId": "exam_001",
+  "title": "Python Programming Exam",
   "questions": [
     {
       "questionId": "q1",
@@ -401,13 +401,13 @@ src/
 │       └── index.js                # Component exports
 ├── pages/
 │   ├── Login.jsx              # Login page
-│   ├── Assessment.jsx         # Assessment page
-│   ├── Verify.jsx             # Verification page
 │   ├── provider/              # Education provider pages
 │   │   ├── ProviderDashboard.jsx   # Provider dashboard
 │   │   ├── IssueCredential.jsx     # Issue credential page
 │   │   ├── BlockchainRecords.jsx   # Blockchain records page
-│   │   └── StudentDetail.jsx       # Student detail page
+│   │   ├── StudentDetail.jsx       # Student detail page
+│   │   ├── SubjectManagement.jsx   # Subject management page
+│   │   └── Exam.jsx                # Exam page
 │   └── verifier/              # Verifier pages
 │       └── VerifierDashboard.jsx   # Verifier dashboard
 ├── service/

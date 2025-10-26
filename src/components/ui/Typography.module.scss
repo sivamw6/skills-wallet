@@ -1,5 +1,6 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
 
 // Typography variants
 .h1 {
@@ -78,11 +79,11 @@
   }
 
   &.secondary {
-    @include text-gradient($primary-blue, lighten($primary-blue, 20%));
+    @include text-gradient($primary-blue, color.adjust($primary-blue, $lightness: 20%));
   }
 
   &.success {
-    @include text-gradient($primary-green, lighten($primary-green, 20%));
+    @include text-gradient($primary-green, color.adjust($primary-green, $lightness: 20%));
   }
 }
 

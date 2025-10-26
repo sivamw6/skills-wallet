@@ -2,6 +2,9 @@
 // SCSS Mixins for Skills Wallet
 // ========================================
 
+@use "sass:color";
+@use "variables" as *;
+
 // Flexbox Utilities
 @mixin flex-center {
   display: flex;

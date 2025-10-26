@@ -11,3 +11,9 @@ export { default as ErrorMessage } from "./ErrorMessage";
 export { default as Divider } from "./Divider";
 export { default as FormGroup } from "./FormGroup";
 export { default as Header } from "./Header";
+
+// Common Components
+export { default as PageHeader } from "../common/PageHeader";
+export { default as StatsCard } from "../common/StatsCard";
+export { default as ActionCard } from "../common/ActionCard";
+export { default as EmptyState } from "../common/EmptyState";

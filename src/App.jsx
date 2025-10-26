@@ -4,9 +4,9 @@ import { useState, useMemo } from "react";
 
 // Pages
 import Login from "./pages/Login";
-import Assessment from "./pages/provider/Assessment";
+import Exam from "./pages/provider/Exam";
 import ProviderDashboard from "./pages/provider/ProviderDashboard";
-import CourseManagement from "./pages/provider/CourseManagement";
+import SubjectManagement from "./pages/provider/SubjectManagement";
 import IssueCredential from "./pages/provider/IssueCredential";
 import BlockchainRecords from "./pages/provider/BlockchainRecords";
 import StudentDetail from "./pages/provider/StudentDetail";
@@ -23,12 +23,12 @@ export default function App() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Assessment route (protected) */}
+        {/* Exam route (protected) */}
         <Route
-          path="/assessment/:id?"
+          path="/exam/:id?"
           element={
             <RequireRole role="provider">
-              <Assessment />
+              <Exam />
             </RequireRole>
           }
         />
@@ -43,10 +43,10 @@ export default function App() {
           }
         />
         <Route
-          path="/provider/courses"
+          path="/provider/subjects"
           element={
             <RequireRole role="provider">
-              <CourseManagement />
+              <SubjectManagement />
             </RequireRole>
           }
         />

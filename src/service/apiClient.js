@@ -62,39 +62,39 @@ class ApiClient {
   // EDUCATION PROVIDER
   // ========================================
 
-  async createAssessment(title, questions) {
-    return this.request("/providers/assessments", {
+  async createExam(title, questions) {
+    return this.request("/providers/exams", {
       method: "POST",
       body: JSON.stringify({ title, questions }),
     });
   }
 
-  async issueCredential(studentId, studentName, assessmentId, score) {
+  async issueCredential(studentId, studentName, examId, score) {
     return this.request("/providers/credentials", {
       method: "POST",
       body: JSON.stringify({
         studentId,
         studentName,
-        assessmentId,
+        examId,
         score,
       }),
     });
   }
 
   // ========================================
-  // ASSESSMENT
+  // EXAM
   // ========================================
 
-  async getAssessment(assessmentId) {
-    return this.request(`/assessments/${assessmentId}`);
+  async getExam(examId) {
+    return this.request(`/exams/${examId}`);
   }
 
-  async listAssessments() {
-    return this.request("/assessments");
+  async listExams() {
+    return this.request("/exams");
   }
 
-  async evaluateAssessment(assessmentId, studentId, answers) {
-    return this.request(`/assessments/${assessmentId}/evaluate`, {
+  async evaluateExam(examId, studentId, answers) {
+    return this.request(`/exams/${examId}/evaluate`, {
       method: "POST",
       body: JSON.stringify({ studentId, answers }),
     });
@@ -146,8 +146,8 @@ class ApiClient {
   // INSTRUCTOR (Future Extension)
   // ========================================
 
-  async getInstructorAssessments(instructorId) {
-    return this.request(`/instructors/${instructorId}/assessments`);
+  async getInstructorExams(instructorId) {
+    return this.request(`/instructors/${instructorId}/exams`);
   }
 }
 

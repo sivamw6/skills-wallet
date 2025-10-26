@@ -1,5 +1,6 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
 
 .container {
   position: relative;
@@ -57,7 +58,7 @@
   }
 
   &.gradient {
-    background: linear-gradient(135deg, $digital-dark 0%, darken($digital-dark, 5%) 100%);
+    background: linear-gradient(135deg, $digital-dark 0%, color.adjust($digital-dark, $lightness: -5%) 100%);
     color: white;
   }
 

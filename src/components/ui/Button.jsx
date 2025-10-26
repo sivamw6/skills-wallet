@@ -20,7 +20,7 @@ export default function Button({
   disabled = false,
   fullWidth = false,
   className = '',
-  as: Component = 'button',
+  as: Component = 'button', // eslint-disable-line no-unused-vars
   children,
   ...props
 }) {

@@ -5,15 +5,14 @@
  */
 
 // Mock data stores
-let assessments = []; // Assessment storage (legacy)
 let exams = []; // Exam storage
-let courses = []; // Course storage
-let units = []; // Unit storage
+let subjects = []; // Subject storage
+let subjectClasses = []; // Subject class storage
 let instructors = []; // Instructor storage
 let credentials = []; // Issued credentials
 let chainTx = []; // "Blockchain" transaction log
 
-// Mock Assessment data
+// Mock Exam data
 const mockQuestions = [
   {
     questionId: "q1",
@@ -40,43 +39,103 @@ const mockQuestions = [
 ];
 
 // Initialize with default data
-const defaultAssessment = {
-  assessmentId: "assess_001",
-  title: "Python Programming Assessment",
+const defaultExam = {
+  examId: "exam_001",
+  title: "Python Programming Exam",
+  description: "Test your Python programming skills with practical questions",
   questions: mockQuestions,
+  totalQuestions: mockQuestions.length,
+  timeLimit: 1800, // 30 minutes
+  difficulty: "intermediate",
+  skills: ["Python Basics", "Data Structures"],
+  createdBy: "instructor_001",
+  createdAt: new Date().toISOString(),
 };
-assessments.push(defaultAssessment);
+exams.push(defaultExam);
 
-// Initialize with default course structure
-const defaultCourse = {
-  courseId: "course_001",
-  code: "CS101",
+// Add more sample exams
+const sampleExams = [
+  {
+    examId: "exam_002",
+    title: "Web Development Fundamentals",
+    description: "Comprehensive exam covering HTML, CSS, and JavaScript basics",
+    questions: [
+      {
+        questionId: "web_q1",
+        text: "What does HTML stand for?",
+        options: [
+          "Hyper Text Markup Language",
+          "High-level Text Machine Language",
+          "Hyperlink and Text Markup Language",
+        ],
+        correctAnswer: "Hyper Text Markup Language",
+      },
+      {
+        questionId: "web_q2",
+        text: "Which CSS property is used to change the text color?",
+        options: ["background-color", "font-color", "color"],
+        correctAnswer: "color",
+      },
+    ],
+    totalQuestions: 2,
+    timeLimit: 1200, // 20 minutes
+    difficulty: "beginner",
+    skills: ["HTML Basics", "CSS Basics"],
+    createdBy: "instructor_001",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    examId: "exam_003",
+    title: "Data Science Advanced",
+    description: "Advanced exam for data science professionals",
+    questions: [
+      {
+        questionId: "ds_q1",
+        text: "Which Python library is best for data manipulation?",
+        options: ["NumPy", "Pandas", "Matplotlib"],
+        correctAnswer: "Pandas",
+      },
+    ],
+    totalQuestions: 1,
+    timeLimit: 2400, // 40 minutes
+    difficulty: "advanced",
+    skills: ["Data Analysis", "Machine Learning"],
+    createdBy: "instructor_002",
+    createdAt: new Date().toISOString(),
+  },
+];
+exams.push(...sampleExams);
+
+// Initialize with default subject structure
+const defaultSubject = {
+  subjectId: "subject_001",
+  code: "SUB101",
   title: "Introduction to Computer Science",
   description: "Basic computer science concepts and programming fundamentals",
-  publicKey: "course_public_key_001",
+  publicKey: "subject_public_key_001",
 };
-courses.push(defaultCourse);
+subjects.push(defaultSubject);
 
-const defaultUnit = {
-  unitId: "unit_001",
-  courseId: "course_001",
-  code: "CS101-01",
+const defaultSubjectClass = {
+  subjectClassId: "subjectClass_001",
+  subjectId: "subject_001",
+  code: "SUB101-01",
   title: "Python Programming Basics",
   description: "Introduction to Python programming language",
 };
-units.push(defaultUnit);
+subjectClasses.push(defaultSubjectClass);
 
-const defaultExam = {
-  examId: "exam_001",
-  unitId: "unit_001",
-  code: "CS101-01-EXAM",
-  title: "Python Programming Assessment",
-  description: "Comprehensive Python programming skills assessment",
+const defaultExamRecord = {
+  examId: "exam_004",
+  subjectClassId: "subjectClass_001",
+  code: "SUB101-01-EXAM",
+  title: "Python Programming Exam",
+  description: "Comprehensive Python programming skills exam",
   publicKey: "exam_public_key_001",
   score: 100,
   questions: mockQuestions,
 };
-exams.push(defaultExam);
+exams.push(defaultExamRecord);
 
 const defaultInstructor = {
   userId: "instructor_001",
@@ -89,53 +148,58 @@ const defaultInstructor = {
 instructors.push(defaultInstructor);
 
 // ========================================
-// COURSE MANAGEMENT
+// SUBJECT MANAGEMENT
 // ========================================
 
-export function createCourse(code, title, description, publicKey) {
-  const courseId = "course_" + Date.now();
-  const course = {
-    courseId,
+export function createSubject(code, title, description, publicKey) {
+  const subjectId = "subject_" + Date.now();
+  const subject = {
+    subjectId,
     code,
     title,
     description,
     publicKey,
   };
-  courses.unshift(course);
-  return course;
+  subjects.unshift(subject);
+  return subject;
 }
 
-export function getCourse(courseId) {
-  return courses.find((c) => c.courseId === courseId) || defaultCourse;
+export function getSubject(subjectId) {
+  return subjects.find((s) => s.subjectId === subjectId) || defaultSubject;
 }
 
-export function listCourses() {
-  return courses;
+export function listSubjects() {
+  return subjects;
 }
 
 // ========================================
-// UNIT MANAGEMENT
+// SUBJECT CLASS MANAGEMENT
 // ========================================
 
-export function createUnit(courseId, code, title, description) {
-  const unitId = "unit_" + Date.now();
-  const unit = {
-    unitId,
-    courseId,
+export function createSubjectClass(subjectId, code, title, description) {
+  const subjectClassId = "subjectClass_" + Date.now();
+  const subjectClass = {
+    subjectClassId,
+    subjectId,
     code,
     title,
     description,
   };
-  units.unshift(unit);
-  return unit;
+  subjectClasses.unshift(subjectClass);
+  return subjectClass;
 }
 
-export function getUnit(unitId) {
-  return units.find((u) => u.unitId === unitId) || defaultUnit;
+export function getSubjectClass(subjectClassId) {
+  return (
+    subjectClasses.find((sc) => sc.subjectClassId === subjectClassId) ||
+    defaultSubjectClass
+  );
 }
 
-export function listUnits(courseId) {
-  return courseId ? units.filter((u) => u.courseId === courseId) : units;
+export function listSubjectClasses(subjectId) {
+  return subjectId
+    ? subjectClasses.filter((sc) => sc.subjectId === subjectId)
+    : subjectClasses;
 }
 
 // ========================================
@@ -143,7 +207,7 @@ export function listUnits(courseId) {
 // ========================================
 
 export function createExam(
-  unitId,
+  subjectClassId,
   code,
   title,
   description,
@@ -154,7 +218,7 @@ export function createExam(
   const examId = "exam_" + Date.now();
   const exam = {
     examId,
-    unitId,
+    subjectClassId,
     code,
     title,
     description,
@@ -170,8 +234,10 @@ export function getExam(examId) {
   return exams.find((e) => e.examId === examId) || defaultExam;
 }
 
-export function listExams(unitId) {
-  return unitId ? exams.filter((e) => e.unitId === unitId) : exams;
+export function listExamsBySubjectClass(subjectClassId) {
+  return subjectClassId
+    ? exams.filter((e) => e.subjectClassId === subjectClassId)
+    : exams;
 }
 
 // ========================================
@@ -206,29 +272,19 @@ export function listInstructors(providerId) {
 }
 
 // ========================================
-// ASSESSMENT MANAGEMENT (Legacy)
+// EXAM MANAGEMENT (Legacy)
 // ========================================
 
-export function createAssessment(title, questions) {
-  const assessmentId = "assess_" + Date.now();
-  const assessment = {
-    assessmentId,
-    title,
-    questions: questions || mockQuestions,
-  };
-  assessments.unshift(assessment);
-  return assessment;
+export function listExams() {
+  return exams;
 }
 
-export function getAssessment(assessmentId) {
-  return (
-    assessments.find((a) => a.assessmentId === assessmentId) ||
-    defaultAssessment
-  );
-}
-
-export function listAssessments() {
-  return assessments;
+export function getAvailableExams() {
+  return exams.filter((exam) => {
+    // Filter exams that are available for students to take
+    // In a real system, this might check enrollment, prerequisites, etc.
+    return exam.createdBy && exam.questions && exam.questions.length > 0;
+  });
 }
 
 // ========================================
@@ -255,39 +311,10 @@ export function evaluateExam(examId, answers) {
 }
 
 // ========================================
-// ASSESSMENT EVALUATION (Legacy)
-// ========================================
-
-export function evaluateAssessment(assessmentId, answers) {
-  const assessment = getAssessment(assessmentId);
-  let correctCount = 0;
-
-  assessment.questions.forEach((q, index) => {
-    if (answers[index] && answers[index] === q.correctAnswer) {
-      correctCount++;
-    }
-  });
-
-  const score = Math.round((correctCount / assessment.questions.length) * 100);
-  return {
-    score,
-    maxScore: 100,
-    correctAnswers: correctCount,
-    totalQuestions: assessment.questions.length,
-  };
-}
-
-// ========================================
 // CREDENTIAL MANAGEMENT
 // ========================================
 
-export function issueCredential({
-  studentId,
-  studentName,
-  assessmentId, // Legacy support
-  examId, // New exam support
-  score,
-}) {
+export function issueCredential({ studentId, studentName, examId, score }) {
   const credentialId = "cred_" + Date.now();
   const txId =
     "0x" + Math.random().toString(16).slice(2) + Date.now().toString(16);
@@ -296,8 +323,7 @@ export function issueCredential({
     credentialId,
     studentId: studentId || "student_001",
     studentName: studentName || "Student A",
-    assessmentId: assessmentId || examId || "assess_001", // Support both legacy and new
-    examId: examId || null, // New field
+    examId: examId || "exam_001",
     score,
     txId,
     timestamp: new Date().toISOString(),

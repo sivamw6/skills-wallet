@@ -53,9 +53,9 @@ export class EducationProvider extends User {
     this.description = description;
   }
 
-  createAssessment(title, questions) {
-    // Create assessment logic
-    return { success: true, assessment: { title, questions } };
+  createExam(title, questions) {
+    // Create exam logic
+    return { success: true, exam: { title, questions } };
   }
 
   issueCredential(studentId, result) {
@@ -97,15 +97,15 @@ export class Instructor extends User {
 }
 
 // ========================================
-// COURSE STRUCTURE CLASSES
+// SUBJECT STRUCTURE CLASSES
 // ========================================
 
 /**
- * Course class
+ * Subject class
  */
-export class Course {
-  constructor(courseId, code, title, description, publicKey) {
-    this.courseId = courseId;
+export class Subject {
+  constructor(subjectId, code, title, description, publicKey) {
+    this.subjectId = subjectId;
     this.code = code;
     this.title = title;
     this.description = description;
@@ -114,12 +114,12 @@ export class Course {
 }
 
 /**
- * Unit class
+ * Subject class
  */
-export class Unit {
-  constructor(unitId, courseId, code, title, description) {
-    this.unitId = unitId;
-    this.courseId = courseId;
+export class SubjectClass {
+  constructor(subjectClassId, subjectId, code, title, description) {
+    this.subjectClassId = subjectClassId;
+    this.subjectId = subjectId;
     this.code = code;
     this.title = title;
     this.description = description;
@@ -127,12 +127,12 @@ export class Unit {
 }
 
 /**
- * Exam class (replaces Assessment)
+ * Exam class
  */
 export class Exam {
   constructor(
     examId,
-    unitId,
+    subjectClassId,
     code,
     title,
     description,
@@ -141,7 +141,7 @@ export class Exam {
     questions
   ) {
     this.examId = examId;
-    this.unitId = unitId;
+    this.subjectClassId = subjectClassId;
     this.code = code;
     this.title = title;
     this.description = description;
@@ -187,10 +187,10 @@ export class Question {
  * Credential class
  */
 export class Credential {
-  constructor(credentialId, studentId, assessmentId, score, txId, timestamp) {
+  constructor(credentialId, studentId, examId, score, txId, timestamp) {
     this.credentialId = credentialId;
     this.studentId = studentId;
-    this.assessmentId = assessmentId; // Note: keeping as assessmentId for backward compatibility
+    this.examId = examId;
     this.score = score;
     this.txId = txId;
     this.timestamp = timestamp;
@@ -261,25 +261,29 @@ export function createUser(role, userData) {
 }
 
 /**
- * Create a new course structure
+ * Create a new subject structure
  */
-export function createCourseStructure(courseData, unitsData, examsData) {
-  const course = new Course(
-    courseData.courseId,
-    courseData.code,
-    courseData.title,
-    courseData.description,
-    courseData.publicKey
+export function createSubjectStructure(
+  subjectData,
+  subjectClassesData,
+  examsData
+) {
+  const subject = new Subject(
+    subjectData.subjectId,
+    subjectData.code,
+    subjectData.title,
+    subjectData.description,
+    subjectData.publicKey
   );
 
-  const units = unitsData.map(
-    (unitData) =>
-      new Unit(
-        unitData.unitId,
-        course.courseId,
-        unitData.code,
-        unitData.title,
-        unitData.description
+  const subjectClasses = subjectClassesData.map(
+    (subjectClassData) =>
+      new SubjectClass(
+        subjectClassData.subjectClassId,
+        subject.subjectId,
+        subjectClassData.code,
+        subjectClassData.title,
+        subjectClassData.description
       )
   );
 
@@ -287,7 +291,7 @@ export function createCourseStructure(courseData, unitsData, examsData) {
     (examData) =>
       new Exam(
         examData.examId,
-        examData.unitId,
+        examData.subjectClassId,
         examData.code,
         examData.title,
         examData.description,
@@ -297,5 +301,5 @@ export function createCourseStructure(courseData, unitsData, examsData) {
       )
   );
 
-  return { course, units, exams };
+  return { subject, subjectClasses, exams };
 }

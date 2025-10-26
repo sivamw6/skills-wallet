@@ -1,0 +1,125 @@
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+// Verification Result Component Styles
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.successMessage {
+  padding: 1.5rem;
+  background: rgba(78, 205, 196, 0.1);
+  border: 2px solid rgba(78, 205, 196, 0.3);
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.successTitle {
+  margin-bottom: 0.5rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  margin-bottom: 1.5rem;
+}
+
+.detailCard {
+  padding: 1.5rem;
+}
+
+.detailTitle {
+  margin-bottom: 1rem;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.detailRowLast {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detailLabel {
+  margin-bottom: 0.5rem;
+}
+
+.detailValue {
+  font-family: monospace;
+  font-size: 0.875rem;
+}
+
+.skillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.skillsDescription {
+  font-size: 0.875rem;
+}
+
+.evidenceCard {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.evidenceValue {
+  margin-bottom: 0.5rem;
+}
+
+.evidenceLabel {
+  margin-bottom: 0.5rem;
+}
+
+.evidenceSubtext {
+  font-size: 0.875rem;
+}
+
+.blockchainSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(78, 205, 196, 0.05);
+  border: 1px solid rgba(78, 205, 196, 0.2);
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.blockchainText {
+  text-align: center;
+}
+
+.errorCard {
+  padding: 2rem;
+  text-align: center;
+  background: rgba(255, 99, 99, 0.1);
+  border: 2px solid rgba(255, 99, 99, 0.3);
+  border-radius: 0.75rem;
+}
+
+.errorTitle {
+  margin-bottom: 1rem;
+}
+
+.errorDescription {
+  margin-bottom: 0.5rem;
+}
+
+.boldText {
+  font-weight: bold;
+}

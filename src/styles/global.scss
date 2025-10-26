@@ -2,8 +2,11 @@
 // Global Styles for Skills Wallet
 // ========================================
 
-@import 'variables.scss';
-@import 'mixins.scss';
+@use "sass:color";
+@use "variables" as *;
+@use "mixins" as *;
+@use "common" as *;
+@use "utilities" as *;
 
 // CSS Reset and Base Styles
 * {
@@ -70,7 +73,7 @@ a {
   transition: color $transition-fast;
 
   &:hover {
-    color: darken($primary-blue, 10%);
+    color: color.adjust($primary-blue, $lightness: -10%);
   }
 }
 
@@ -199,10 +202,10 @@ input, textarea, select {
   }
 
   a {
-    color: lighten($primary-blue, 20%);
+    color: color.adjust($primary-blue, $lightness: 20%);
 
     &:hover {
-      color: lighten($primary-blue, 30%);
+      color: color.adjust($primary-blue, $lightness: 30%);
     }
   }
 }

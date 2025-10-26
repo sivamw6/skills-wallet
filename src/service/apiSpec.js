@@ -37,42 +37,42 @@ const loginResponse = {
 // ========================================
 
 /**
- * POST /providers/courses
- * Create a new course
+ * POST /providers/subjects
+ * Create a new subject
  */
-const createCoursePayload = {
+const createSubjectPayload = {
   code: "CS101",
   title: "Introduction to Computer Science",
   description: "Basic computer science concepts and programming fundamentals",
-  publicKey: "course_public_key_here",
+  publicKey: "subject_public_key_here",
 };
 
-const createCourseResponse = {
+const createSubjectResponse = {
   success: true,
-  course: {
-    courseId: "course_001",
+  subject: {
+    subjectId: "subject_001",
     code: "CS101",
     title: "Introduction to Computer Science",
     description: "Basic computer science concepts and programming fundamentals",
-    publicKey: "course_public_key_here",
+    publicKey: "subject_public_key_here",
   },
 };
 
 /**
- * POST /providers/courses/{courseId}/units
- * Create a new unit within a course
+ * POST /providers/subjects/{subjectId}/classes
+ * Create a new class within a subject
  */
-const createUnitPayload = {
+const createSubjectClassPayload = {
   code: "CS101-01",
   title: "Python Programming Basics",
   description: "Introduction to Python programming language",
 };
 
-const createUnitResponse = {
+const createSubjectClassResponse = {
   success: true,
-  unit: {
-    unitId: "unit_001",
-    courseId: "course_001",
+  subjectClass: {
+    subjectClassId: "subjectClass_001",
+    subjectId: "subject_001",
     code: "CS101-01",
     title: "Python Programming Basics",
     description: "Introduction to Python programming language",
@@ -80,13 +80,13 @@ const createUnitResponse = {
 };
 
 /**
- * POST /providers/units/{unitId}/exams
- * Create a new exam within a unit
+ * POST /providers/classes/{classId}/exams
+ * Create a new exam within a class
  */
-const createExamPayload = {
+const createExamPayloadV2 = {
   code: "CS101-01-EXAM",
-  title: "Python Programming Assessment",
-  description: "Comprehensive Python programming skills assessment",
+  title: "Python Programming Exam",
+  description: "Comprehensive Python programming skills exam",
   publicKey: "exam_public_key_here",
   score: 100,
   questions: [
@@ -99,14 +99,14 @@ const createExamPayload = {
   ],
 };
 
-const createExamResponse = {
+const createExamResponseV2 = {
   success: true,
   exam: {
     examId: "exam_001",
-    unitId: "unit_001",
+    subjectClassId: "subjectClass_001",
     code: "CS101-01-EXAM",
-    title: "Python Programming Assessment",
-    description: "Comprehensive Python programming skills assessment",
+    title: "Python Programming Exam",
+    description: "Comprehensive Python programming skills exam",
     publicKey: "exam_public_key_here",
     score: 100,
     questions: [
@@ -121,45 +121,13 @@ const createExamResponse = {
 };
 
 /**
- * POST /providers/assessments (Legacy - for backward compatibility)
- * Create a new assessment
- */
-const createAssessmentPayload = {
-  title: "Advanced Programming Assessment",
-  questions: [
-    {
-      questionId: "q1",
-      text: "What is the time complexity of binary search?",
-      options: ["O(n)", "O(log n)", "O(n²)"],
-      correctAnswer: "O(log n)",
-    },
-  ],
-};
-
-const createAssessmentResponse = {
-  success: true,
-  assessment: {
-    assessmentId: "assess_002",
-    title: "Advanced Programming Assessment",
-    questions: [
-      {
-        questionId: "q1",
-        text: "What is the time complexity of binary search?",
-        options: ["O(n)", "O(log n)", "O(n²)"],
-        correctAnswer: "O(log n)",
-      },
-    ],
-  },
-};
-
-/**
  * POST /providers/credentials
- * Issue a credential after assessment
+ * Issue a credential after exam
  */
 const issueCredentialPayload = {
   studentId: "student_001",
   studentName: "John Doe",
-  assessmentId: "assess_002",
+  examId: "exam_002",
   score: 85,
 };
 
@@ -169,7 +137,7 @@ const issueCredentialResponse = {
     credentialId: "cred_003",
     studentId: "student_001",
     studentName: "John Doe",
-    assessmentId: "assess_002",
+    examId: "exam_002",
     score: 85,
     txId: "0x123abc456def",
     timestamp: "2024-01-15T10:30:00Z",
@@ -177,18 +145,18 @@ const issueCredentialResponse = {
 };
 
 // ========================================
-// ASSESSMENT ENDPOINTS
+// EXAM ENDPOINTS
 // ========================================
 
 /**
- * GET /assessments/{assessmentId}
- * Get assessment details
+ * GET /exams/{examId}
+ * Get exam details
  */
-const getAssessmentResponse = {
+const getExamResponse = {
   success: true,
-  assessment: {
-    assessmentId: "assess_002",
-    title: "Advanced Programming Assessment",
+  exam: {
+    examId: "exam_002",
+    title: "Advanced Programming Exam",
     questions: [
       {
         questionId: "q1",
@@ -201,10 +169,10 @@ const getAssessmentResponse = {
 };
 
 /**
- * POST /assessments/{assessmentId}/evaluate
+ * POST /exams/{examId}/evaluate
  * Evaluate student answers
  */
-const evaluateAssessmentPayload = {
+const evaluateExamPayload = {
   studentId: "student_001",
   answers: [
     {
@@ -214,7 +182,7 @@ const evaluateAssessmentPayload = {
   ],
 };
 
-const evaluateAssessmentResponse = {
+const evaluateExamResponse = {
   success: true,
   result: {
     score: 100,
@@ -244,7 +212,7 @@ const verifyCredentialResponse = {
     credentialId: "cred_003",
     studentId: "student_001",
     studentName: "John Doe",
-    assessmentId: "assess_002",
+    examId: "exam_002",
     score: 85,
     txId: "0x123abc456def",
     timestamp: "2024-01-15T10:30:00Z",
@@ -266,7 +234,7 @@ const verifyTransactionResponse = {
     credentialId: "cred_003",
     studentId: "student_001",
     studentName: "John Doe",
-    assessmentId: "assess_002",
+    examId: "exam_002",
     score: 85,
     txId: "0x123abc456def",
     timestamp: "2024-01-15T10:30:00Z",
@@ -289,7 +257,6 @@ const getStudentCredentialsResponse = {
       credentialId: "cred_001",
       studentId: "student_001",
       studentName: "John Doe",
-      assessmentId: "assess_001",
       examId: "exam_001",
       score: 85,
       txId: "0x123abc456def",
@@ -299,7 +266,6 @@ const getStudentCredentialsResponse = {
       credentialId: "cred_002",
       studentId: "student_001",
       studentName: "John Doe",
-      assessmentId: "assess_002",
       examId: "exam_002",
       score: 72,
       txId: "0x456def789ghi",
@@ -309,7 +275,6 @@ const getStudentCredentialsResponse = {
       credentialId: "cred_003",
       studentId: "student_001",
       studentName: "John Doe",
-      assessmentId: "assess_003",
       examId: "exam_003",
       score: 65,
       txId: "0x789ghi012jkl",
@@ -333,7 +298,6 @@ const verifyTokenResponse = {
     credentialId: "cred_003",
     studentId: "student_001",
     studentName: "John Doe",
-    assessmentId: "assess_002",
     examId: "exam_002",
     score: 85,
     txId: "0x123abc456def",
@@ -415,24 +379,8 @@ const instructorExamsResponse = {
   exams: [
     {
       examId: "exam_001",
-      title: "Python Programming Assessment",
-      unitId: "unit_001",
-      assignedBy: "provider_001",
-      dueDate: "2024-01-20T23:59:59Z",
-    },
-  ],
-};
-
-/**
- * GET /instructors/{instructorId}/assessments (Legacy)
- * Get assessments assigned to instructor
- */
-const instructorAssessmentsResponse = {
-  success: true,
-  assessments: [
-    {
-      assessmentId: "assess_002",
-      title: "Advanced Programming Assessment",
+      title: "Python Programming Exam",
+      subjectClassId: "subjectClass_001",
       assignedBy: "provider_001",
       dueDate: "2024-01-20T23:59:59Z",
     },
@@ -444,24 +392,22 @@ export {
   loginPayload,
   loginResponse,
 
-  // Education Provider - Courses
-  createCoursePayload,
-  createCourseResponse,
-  createUnitPayload,
-  createUnitResponse,
-  createExamPayload,
-  createExamResponse,
+  // Education Provider - Subjects
+  createSubjectPayload,
+  createSubjectResponse,
+  createSubjectClassPayload,
+  createSubjectClassResponse,
+  createExamPayloadV2 as createExamPayload,
+  createExamResponseV2 as createExamResponse,
 
-  // Education Provider - Legacy
-  createAssessmentPayload,
-  createAssessmentResponse,
+  // Education Provider - Credentials
   issueCredentialPayload,
   issueCredentialResponse,
 
-  // Assessment/Exam
-  getAssessmentResponse,
-  evaluateAssessmentPayload,
-  evaluateAssessmentResponse,
+  // Exam
+  getExamResponse,
+  evaluateExamPayload,
+  evaluateExamResponse,
 
   // Verifier
   verifyCredentialPayload,
@@ -480,5 +426,4 @@ export {
   createInstructorPayload,
   createInstructorResponse,
   instructorExamsResponse,
-  instructorAssessmentsResponse,
 };

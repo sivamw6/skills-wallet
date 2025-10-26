@@ -12,7 +12,7 @@ import {
 
 /**
  * Student Detail Page - Shows comprehensive information about a specific student
- * Displays all credentials, blockchain records, and assessment history
+ * Displays all credentials, blockchain records, and exam history
  */
 export default function StudentDetail() {
   const { studentId } = useParams();
@@ -139,7 +139,7 @@ export default function StudentDetail() {
               {studentCredentials.filter(c => c.score >= 70).length}
             </Typography>
             <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
-              Passed Assessments
+              Passed Exams
             </Typography>
             <Typography variant="body" color="white">
               Successful completions
@@ -170,7 +170,7 @@ export default function StudentDetail() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                   <div style={{ flex: 1 }}>
                     <Typography variant="h5" color="white" style={{ marginBottom: '0.5rem' }}>
-                      {cred.assessmentId}
+                      {cred.examId}
                     </Typography>
                     <Typography variant="body" color="white" style={{ marginBottom: '0.25rem' }}>
                       <strong>Credential ID:</strong> {cred.credentialId}
@@ -241,7 +241,7 @@ export default function StudentDetail() {
                     {tx.txId}
                   </Typography>
                   <Typography variant="h5" color="white" style={{ marginBottom: '0.5rem' }}>
-                    {tx.assessmentId}
+                    {tx.examId}
                   </Typography>
                   <Typography variant="body" color="gray">
                     Recorded {new Date(tx.timestamp).toLocaleDateString()}

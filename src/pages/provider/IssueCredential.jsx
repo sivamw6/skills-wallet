@@ -15,27 +15,27 @@ import {
 } from "../../components/ui";
 
 /**
- * Issue Credential Page - Education Provider issues credentials after assessment
- * Can be accessed directly or after completing an assessment
+ * Issue Credential Page - Education Provider issues credentials after exam
+ * Can be accessed directly or after completing an exam
  */
 export default function IssueCredential() {
   const navigate = useNavigate();
   const location = useLocation();
   const [studentId, setStudentId] = useState("student_001");
   const [studentName, setStudentName] = useState("");
-  const [assessmentId, setAssessmentId] = useState("assess_001");
+  const [examId, setExamId] = useState("exam_001");
   const [score, setScore] = useState(null);
   const [isIssued, setIsIssued] = useState(false);
   const [issuedCredential, setIssuedCredential] = useState(null);
 
-  // Get assessment data (for future use)
-  // const assessment = getAssessment(assessmentId);
+  // Get exam data (for future use)
+  // const exam = getExam(examId);
 
-  // Handle data from assessment completion
+  // Handle data from exam completion
   useEffect(() => {
     if (location.state) {
-      const { assessmentId: stateAssessmentId, score: stateScore } = location.state;
-      if (stateAssessmentId) setAssessmentId(stateAssessmentId);
+      const { examId: stateExamId, score: stateScore } = location.state;
+      if (stateExamId) setExamId(stateExamId);
       if (stateScore !== undefined) setScore(stateScore);
     }
   }, [location.state]);
@@ -44,14 +44,14 @@ export default function IssueCredential() {
     e.preventDefault();
     
     if (score === null) {
-      alert("Please complete an assessment first or enter a score manually.");
+      alert("Please complete an exam first or enter a score manually.");
       return;
     }
 
     const result = issueCredential({
       studentId,
       studentName: studentName || "Student A",
-      assessmentId,
+      examId,
       score
     });
 
@@ -82,7 +82,7 @@ export default function IssueCredential() {
             🎓 Issue Digital Credential
           </Typography>
           <Typography variant="body" color="white" style={{ marginTop: '0.5rem' }}>
-            Create and issue a blockchain-verified digital credential for a student's assessment completion.
+            Create and issue a blockchain-verified digital credential for a student's exam completion.
           </Typography>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default function IssueCredential() {
             Credential Details
           </Typography>
           <Typography variant="body" color="white" style={{ marginBottom: '2rem' }}>
-            Fill in the student information and assessment details to issue a credential.
+            Fill in the student information and exam details to issue a credential.
           </Typography>
 
           <form onSubmit={handleIssueCredential}>
@@ -122,16 +122,16 @@ export default function IssueCredential() {
                 />
               </FormGroup>
 
-              <FormGroup label="Assessment ID">
+              <FormGroup label="Exam ID">
                 <Select
                   variant="dark"
                   size="lg"
-                  value={assessmentId}
-                  onChange={(e) => setAssessmentId(e.target.value)}
+                   value={examId}
+                   onChange={(e) => setExamId(e.target.value)}
                 >
-                  <option value="assess_001">Assessment 001 - Basic Skills</option>
-                  <option value="assess_002">Assessment 002 - Advanced Topics</option>
-                  <option value="assess_003">Assessment 003 - Practical Application</option>
+                  <option value="exam_001">Exam 001 - Basic Skills</option>
+                  <option value="exam_002">Exam 002 - Advanced Topics</option>
+                  <option value="exam_003">Exam 003 - Practical Application</option>
                 </Select>
               </FormGroup>
             </Grid>
@@ -140,7 +140,7 @@ export default function IssueCredential() {
 
             <Card variant="dark" style={{ marginBottom: '2rem' }}>
               <Typography variant="h3" color="white" style={{ marginBottom: '1rem' }}>
-                Assessment Score
+                Exam Score
               </Typography>
               {score !== null ? (
                 <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -215,8 +215,8 @@ export default function IssueCredential() {
               <Typography variant="h5" color="white">{issuedCredential.studentId}</Typography>
             </Card>
             <Card variant="dark" size="sm">
-              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Assessment:</Typography>
-              <Typography variant="h5" color="white">{issuedCredential.assessmentId}</Typography>
+              <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Exam:</Typography>
+              <Typography variant="h5" color="white">{issuedCredential.examId}</Typography>
             </Card>
             <Card variant="dark" size="sm">
               <Typography variant="body" color="gray" style={{ marginBottom: '0.5rem' }}>Credential ID:</Typography>

@@ -1,0 +1,249 @@
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+// Exam Page Styles
+.examContainer {
+  // Container styles are handled by the Container component
+}
+
+.headerSection {
+  margin-bottom: 2rem;
+}
+
+.headerTitle {
+  margin-bottom: 0.5rem;
+}
+
+.emptyStateCard {
+  text-align: center;
+  padding: 3rem;
+}
+
+.emptyStateTitle {
+  margin-bottom: 1rem;
+}
+
+.emptyStateDescription {
+  margin-bottom: 2rem;
+}
+
+.examGrid {
+  margin-bottom: 2rem;
+}
+
+.examCard {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.examCardTitle {
+  margin-bottom: 0.5rem;
+}
+
+.examCardDescription {
+  margin-bottom: 1rem;
+}
+
+.examCardBadges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.examCard {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.examCardTitle {
+  margin-bottom: 0.5rem;
+}
+
+.examCardDescription {
+  margin-bottom: 1rem;
+}
+
+.examCardBadges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.examCardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.examCardButton {
+  margin-top: auto;
+}
+
+.examGrid {
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.centerActions {
+  text-align: center;
+}
+
+.loadingTitle {
+  text-align: center;
+}
+
+.examHeader {
+  margin-bottom: 2rem;
+}
+
+.examHeaderTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.examTitle {
+  margin-bottom: 0.5rem;
+}
+
+.examBadges {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.questionCard {
+  margin-bottom: 2rem;
+}
+
+.questionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.questionBadges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.questionText {
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  
+  &:hover {
+    background: rgba(78, 205, 196, 0.1);
+    border-color: rgba(78, 205, 196, 0.3);
+  }
+  
+  &.selected {
+    background: rgba(78, 205, 196, 0.1);
+    border-color: rgba(78, 205, 196, 0.3);
+  }
+}
+
+.optionInput {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: #4ECDC4;
+}
+
+.submitButton {
+  margin-top: 2rem;
+}
+
+.resultsCard {
+  margin-top: 2rem;
+}
+
+.resultsTitle {
+  margin-bottom: 1.5rem;
+}
+
+.resultsMetrics {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.metricItem {
+  text-align: center;
+}
+
+.metricBadge {
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.metricValue {
+  margin-bottom: 0.5rem;
+}
+
+.skillBreakdown {
+  margin-bottom: 2rem;
+}
+
+.skillBreakdownTitle {
+  margin-bottom: 1rem;
+}
+
+.skillCard {
+  padding: 1rem;
+}
+
+.skillTitle {
+  margin-bottom: 0.5rem;
+}
+
+.skillStats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resultsActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../App";
-import { listCredentials, listAssessments, listCourses, listUnits, listExams } from "../../service/mockAPI";
+import { listCredentials, listExams, listSubjects } from "../../service/mockAPI";
 import { 
   Button, 
   Card, 
@@ -9,20 +9,18 @@ import {
   Grid,
   Badge 
 } from "../../components/ui";
-import styles from "./ProviderDashboard.module.scss";
+import "../../styles/utilities.scss";
 
 /**
  * Education Provider Dashboard - Main hub for credential management
- * Shows available assessments, issued credentials, and quick actions
+ * Shows available exams, issued credentials, and quick actions
  */
 export default function ProviderDashboard() {
   const { session, setSession } = useAuth();
   const navigate = useNavigate();
   const credentials = listCredentials();
-  const assessments = listAssessments();
-  const courses = listCourses();
-  const units = listUnits();
   const exams = listExams();
+  const subjects = listSubjects();
 
   function handleLogout() {
     setSession(null);
@@ -32,19 +30,12 @@ export default function ProviderDashboard() {
   return (
     <Container variant="default" size="lg" fullHeight>
       {/* Header */}
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        marginBottom: '3rem',
-        flexWrap: 'wrap',
-        gap: '1rem'
-      }}>
+      <div className="page-header">
         <div>
-          <Typography variant="h1" gradient primary>
+          <Typography variant="h1" gradient color="primary">
             🎓 Education Provider Dashboard
           </Typography>
-          <Typography variant="body" color="white" style={{ marginTop: '0.5rem' }}>
+          <Typography variant="body" color="white" className="mt-2">
             Welcome back, <strong>{session?.name || "Provider"}</strong>
           </Typography>
         </div>
@@ -54,27 +45,27 @@ export default function ProviderDashboard() {
       </div>
       
       {/* Stats Grid */}
-      <Grid columns={4} gap="lg" responsive style={{ marginBottom: '3rem' }}>
+      <Grid columns={4} gap="lg" responsive className="mb-12">
         <Card variant="glass" hover>
-          <div style={{ textAlign: 'center' }}>
-            <Typography variant="h2" color="primary" style={{ marginBottom: '0.5rem' }}>
-              {courses.length}
+          <div className="stats-card">
+            <Typography variant="h2" color="primary" className="mb-2">
+              {subjects.length}
             </Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
-              Courses
+            <Typography variant="h4" color="white" className="mb-2">
+              Subjects
             </Typography>
             <Typography variant="body" color="white">
-              Total courses available
+              Total subjects available
             </Typography>
           </div>
         </Card>
         
         <Card variant="glass" hover>
-          <div style={{ textAlign: 'center' }}>
-            <Typography variant="h2" color="secondary" style={{ marginBottom: '0.5rem' }}>
+          <div className="stats-card">
+            <Typography variant="h2" color="secondary" className="mb-2">
               {exams.length}
             </Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
+            <Typography variant="h4" color="white" className="mb-2">
               Exams
             </Typography>
             <Typography variant="body" color="white">
@@ -84,11 +75,11 @@ export default function ProviderDashboard() {
         </Card>
         
         <Card variant="glass" hover>
-          <div style={{ textAlign: 'center' }}>
-            <Typography variant="h2" color="success" style={{ marginBottom: '0.5rem' }}>
+          <div className="stats-card">
+            <Typography variant="h2" color="success" className="mb-2">
               {credentials.length}
             </Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
+            <Typography variant="h4" color="white" className="mb-2">
               Issued Credentials
             </Typography>
             <Typography variant="body" color="white">
@@ -98,11 +89,11 @@ export default function ProviderDashboard() {
         </Card>
         
         <Card variant="glass" hover>
-          <div style={{ textAlign: 'center' }}>
-            <Typography variant="h2" color="warning" style={{ marginBottom: '0.5rem' }}>
+          <div className="stats-card">
+            <Typography variant="h2" color="warning" className="mb-2">
               {credentials.filter(c => c.score >= 70).length}
             </Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '0.5rem' }}>
+            <Typography variant="h4" color="white" className="mb-2">
               Passed Students
             </Typography>
             <Typography variant="body" color="white">
@@ -113,62 +104,63 @@ export default function ProviderDashboard() {
       </Grid>
 
       {/* Actions Grid */}
-      <div className={styles.actionsGrid}>
-        <Card variant="glass" hover clickable className={styles.actionCard}>
-          <div className={styles.actionContent}>
-            <Typography variant="h2" style={{ marginBottom: '1rem' }}>📚</Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
-              Course Management
+      <div className="grid-container">
+        <Card variant="glass" hover clickable className="action-card">
+          <div className="action-card-content">
+            <Typography variant="h2" className="mb-4">📚</Typography>
+            <Typography variant="h4" color="white" className="mb-4">
+              Subject Management
             </Typography>
-            <Typography variant="body" color="white" className={styles.actionDescription}>
-              Manage courses, units, and exams in a structured hierarchy.
+            <Typography variant="body" color="white" className="mb-6 flex-1">
+              Manage subjects, classes, and exams in a structured hierarchy.
             </Typography>
-            <Button variant="primary" fullWidth as={Link} to="/provider/courses" className={styles.actionButton}>
-              Manage Courses
+            <Button variant="primary" fullWidth as={Link} to="/provider/subjects" className="mt-auto">
+              Manage Subjects
             </Button>
           </div>
         </Card>
 
-        <Card variant="glass" hover clickable className={styles.actionCard}>
-          <div className={styles.actionContent}>
-            <Typography variant="h2" style={{ marginBottom: '1rem' }}>📝</Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
-              Take Assessment
+        <Card variant="glass" hover clickable className="action-card">
+          <div className="action-card-content">
+            <Typography variant="h2" className="mb-4">📝</Typography>
+            <Typography variant="h4" color="white" className="mb-4">
+              Take Exam (Simulation)
             </Typography>
-            <Typography variant="body" color="white" className={styles.actionDescription}>
-              Complete an existing assessment to earn digital credentials.
+            <Typography variant="body" color="white" className="mb-6 flex-1">
+              Complete authentic, skill-based exams that measure practical competencies. 
+              Generate tailored evaluations for specific roles and difficulty levels.
             </Typography>
-            <Button variant="primary" fullWidth as={Link} to="/assessment" className={styles.actionButton}>
-              Start Assessment
+            <Button variant="primary" fullWidth as={Link} to="/exam" className="mt-auto">
+              Start Exam
             </Button>
           </div>
         </Card>
 
-        <Card variant="glass" hover clickable className={styles.actionCard}>
-          <div className={styles.actionContent}>
-            <Typography variant="h2" style={{ marginBottom: '1rem' }}>🎓</Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
+        <Card variant="glass" hover clickable className="action-card">
+          <div className="action-card-content">
+            <Typography variant="h2" className="mb-4">🎓</Typography>
+            <Typography variant="h4" color="white" className="mb-4">
               Issue Credential
             </Typography>
-            <Typography variant="body" color="white" className={styles.actionDescription}>
-              Issue a digital credential for a completed assessment.
+            <Typography variant="body" color="white" className="mb-6 flex-1">
+              Issue a digital credential for a completed exam.
             </Typography>
-            <Button variant="primary" fullWidth as={Link} to="/provider/issue" className={styles.actionButton}>
+            <Button variant="primary" fullWidth as={Link} to="/provider/issue" className="mt-auto">
               Issue Credential
             </Button>
           </div>
         </Card>
 
-        <Card variant="glass" hover clickable className={styles.actionCard}>
-          <div className={styles.actionContent}>
-            <Typography variant="h2" style={{ marginBottom: '1rem' }}>🔗</Typography>
-            <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
+        <Card variant="glass" hover clickable className="action-card">
+          <div className="action-card-content">
+            <Typography variant="h2" className="mb-4">🔗</Typography>
+            <Typography variant="h4" color="white" className="mb-4">
               Blockchain Records
             </Typography>
-            <Typography variant="body" color="white" className={styles.actionDescription}>
+            <Typography variant="body" color="white" className="mb-6 flex-1">
               View all issued credentials recorded on the blockchain.
             </Typography>
-            <Button variant="primary" fullWidth as={Link} to="/provider/chain" className={styles.actionButton}>
+            <Button variant="primary" fullWidth as={Link} to="/provider/chain" className="mt-auto">
               View Records
             </Button>
           </div>
@@ -177,74 +169,59 @@ export default function ProviderDashboard() {
 
       {/* Recent Credentials */}
       <Card variant="glass" size="lg">
-        <Typography variant="h3" color="white" style={{ marginBottom: '2rem' }}>
+        <Typography variant="h3" color="white" className="mb-8">
           Recently Issued Credentials
         </Typography>
         
         {credentials.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3rem 0' }}>
-            <Typography variant="h2" style={{ marginBottom: '1rem' }}>📋</Typography>
-            <Typography variant="body" color="white" style={{ marginBottom: '0.5rem' }}>
+          <div className="empty-state">
+            <Typography variant="h2" className="mb-4">📋</Typography>
+            <Typography variant="body" color="white" className="mb-2">
               No credentials issued yet.
             </Typography>
             <Typography variant="body" color="white">
-              Start by creating an assessment or issuing a credential manually.
+              Start by creating an exam or issuing a credential manually.
             </Typography>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div className="flex flex-column gap-4">
             {credentials.slice(0, 5).map(cred => (
-              <Card key={cred.credentialId} variant="dark" style={{ 
-                padding: '1.5rem'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                  <div style={{ flex: 1 }}>
-                    <Typography 
-                      variant="h5" 
-                      color="primary" 
-                      style={{ 
-                        marginBottom: '0.5rem',
+              <Card key={cred.credentialId} variant="dark" className="p-6">
+                <div className="credential-header">
+                  <div className="credential-body">
+                    <Typography
+                      variant="h5"
+                      color="primary"
+                      style={{
                         cursor: 'pointer',
                         textDecoration: 'underline'
                       }}
                       onClick={() => navigate(`/provider/student/${cred.studentId}`)}
                     >
-                      {cred.studentName}
+                      {cred.studentName || 'Student A'}
                     </Typography>
-                    <Typography variant="body" color="white" style={{ marginBottom: '0.25rem' }}>
-                      <strong>Assessment:</strong> {cred.assessmentId}
+                    <Typography variant="body" color="white" className="mb-1">
+                      <strong>Exam ID:</strong> {cred.examId}
                     </Typography>
-                    <Typography variant="body" color="white" style={{ marginBottom: '0.25rem' }}>
-                      <strong>Student ID:</strong> {cred.studentId}
-                    </Typography>
-                    <Typography variant="body" color="white">
+                    <Typography variant="body" color="white" className="mb-1">
                       <strong>Issued:</strong> {new Date(cred.timestamp).toLocaleDateString()}
                     </Typography>
                   </div>
-                  <Badge 
-                    variant={cred.score >= 70 ? 'success' : cred.score >= 50 ? 'warning' : 'error'}
-                    size="lg"
-                  >
-                    {cred.score}%
-                  </Badge>
-                </div>
-                
-                <div style={{ 
-                  background: 'rgba(78, 205, 196, 0.1)',
-                  padding: '0.75rem',
-                  borderRadius: '0.5rem',
-                  border: '1px solid rgba(78, 205, 196, 0.2)'
-                }}>
-                  <Typography variant="body" color="gray" style={{ marginBottom: '0.25rem', fontSize: '0.875rem' }}>
-                    <strong>Transaction ID (Token):</strong>
-                  </Typography>
-                  <Typography variant="body" color="primary" style={{ 
-                    fontFamily: 'monospace',
-                    fontSize: '0.875rem',
-                    wordBreak: 'break-all'
-                  }}>
-                    {cred.txId}
-                  </Typography>
+                  <div className="flex flex-column items-end gap-2">
+                    <Badge 
+                      variant={cred.score >= 70 ? 'success' : cred.score >= 50 ? 'warning' : 'error'}
+                      size="lg"
+                    >
+                      {cred.score}%
+                    </Badge>
+                    <Typography 
+                      variant="body" 
+                      color="gray" 
+                      className="mono-text"
+                    >
+                      {cred.txId}
+                    </Typography>
+                  </div>
                 </div>
               </Card>
             ))}
@@ -252,23 +229,20 @@ export default function ProviderDashboard() {
         )}
       </Card>
 
-      {/* Info Section */}
-      <Card variant="dark" style={{ marginTop: '2rem' }}>
-        <Typography variant="h4" color="white" style={{ marginBottom: '1rem' }}>
-          About Digital Credentials
+      {/* Quick Info */}
+      <Card variant="dark" className="mt-8 p-6">
+        <Typography variant="h4" color="white" className="mb-4">
+          ℹ️ Getting Started
         </Typography>
-        <Typography variant="body" color="white" style={{ marginBottom: '1rem' }}>
-          Digital credentials issued through this system are:
+        <Typography variant="body" color="white" className="mb-4">
+          Welcome to your Digital Skills Wallet dashboard. Here's what you can do:
         </Typography>
         <ul style={{ color: 'rgba(255, 255, 255, 0.8)', paddingLeft: '1.5rem' }}>
-          <li style={{ marginBottom: '0.5rem' }}>
-            <strong>Blockchain-verified:</strong> Immutable and tamper-proof
+          <li className="mb-2">
+            <strong>Manage Subjects:</strong> Create and organize your educational content by subjects, classes, and exams.
           </li>
-          <li style={{ marginBottom: '0.5rem' }}>
-            <strong>Instantly verifiable:</strong> Can be checked by any verifier
-          </li>
-          <li>
-            <strong>Portable:</strong> Students can share them anywhere
+          <li className="mb-2">
+            <strong>Take Exams:</strong> Complete skill-based assessments to demonstrate your competencies.
           </li>
         </ul>
       </Card>
