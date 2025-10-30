@@ -213,7 +213,8 @@ export function createExam(
   description,
   publicKey,
   score,
-  questions
+  questions,
+  metadata = {}
 ) {
   const examId = "exam_" + Date.now();
   const exam = {
@@ -225,6 +226,13 @@ export function createExam(
     publicKey,
     score,
     questions: questions || mockQuestions,
+    totalQuestions: (questions || mockQuestions).length,
+    timeLimit: 1800, // 30 minutes default
+    difficulty: metadata.difficulty || "intermediate",
+    skills: metadata.skillSet ? [metadata.skillSet] : [],
+    createdBy: "instructor_001",
+    createdAt: new Date().toISOString(),
+    status: "active",
   };
   exams.unshift(exam);
   return exam;

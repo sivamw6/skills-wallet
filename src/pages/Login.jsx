@@ -86,7 +86,16 @@ export default function Login() {
     <Container variant="default" size="lg" fullHeight centered>
       <Card variant="glass" size="lg" hover>
         <Header 
-          title="⚡ Skills Wallet"
+          title={
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+              <img 
+                src="/kanavoogle-logo.png" 
+                alt="Kanavoogle" 
+                style={{ width: '48px', height: '48px' }}
+              />
+              <span>Skills Wallet</span>
+            </div>
+          }
           subtitle="Digital Credential Management System"
           variant="centered"
           gradient

@@ -124,7 +124,11 @@ export default function SubjectManagement() {
           formData.description || generatedExam.description,
           formData.publicKey || generatePublicKey(),
           formData.score || 100,
-          generatedExam.questions
+          generatedExam.questions,
+          {
+            difficulty: difficulty,
+            skillSet: selectedSkillSet,
+          }
         );
         break;
       }
@@ -180,7 +184,11 @@ export default function SubjectManagement() {
       examData.description,
       examData.publicKey,
       examData.score,
-      examData.questions
+      examData.questions,
+      {
+        difficulty: examData.difficulty,
+        skillSet: examData.skillSet,
+      }
     );
     
     loadData();
@@ -521,10 +529,7 @@ export default function SubjectManagement() {
           initialData={editingExam}
           onCancel={handleCancelExamBuilder}
           onSubmit={(data) => {
-            handleCreateExam({
-              ...data,
-              questions: [],
-            });
+            handleCreateExam(data);
           }}
         />
       )}
