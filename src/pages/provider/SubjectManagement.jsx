@@ -345,7 +345,7 @@ export default function SubjectManagement() {
               <div className={styles.list}>
                 {exams
                   .filter(exam => exam.subjectClassId === selectedSubjectClass.subjectClassId)
-                  .slice(0, 3) // 只顯示前3個
+                  .slice(0, 3) // Show only the first 3
                   .map((exam) => (
                     <div key={exam.examId} className={styles.listItem}>
                       <Typography variant="h4" color="white">

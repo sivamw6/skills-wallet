@@ -29,7 +29,12 @@ export default function Select({
   ].filter(Boolean).join(' ');
 
   return (
-    <select className={selectClasses} disabled={disabled} {...props}>
+    <select
+      className={selectClasses}
+      disabled={disabled}
+      aria-invalid={error || undefined}
+      {...props}
+    >
       {children}
     </select>
   );

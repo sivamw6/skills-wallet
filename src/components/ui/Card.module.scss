@@ -7,10 +7,10 @@
   transition: all $transition-base;
   position: relative;
   
-  // 統一Card間距 - 確保Card之間有適當的間距
+  // Standardize card spacing - ensure appropriate spacing between cards
   margin-bottom: $spacing-6;
   
-  // 確保同類型Card的最小高度一致
+  // Ensure consistent minimum height for cards of the same type
   min-height: 200px;
   display: flex;
   flex-direction: column;

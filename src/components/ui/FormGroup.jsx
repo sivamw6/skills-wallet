@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children, isValidElement, cloneElement, useId } from 'react';
 import styles from './FormGroup.module.scss';
 
 /**
@@ -21,15 +21,24 @@ export default function FormGroup({
     className
   ].filter(Boolean).join(' ');
 
+  const reactId = useId();
+  let fieldId;
+  let childElement = children;
+
+  if (isValidElement(children)) {
+    fieldId = children.props.id || `field-${reactId}`;
+    childElement = cloneElement(children, { id: fieldId, ...children.props });
+  }
+
   return (
     <div className={groupClasses} {...props}>
       {label && (
-        <label className={styles.formLabel}>
+        <label className={styles.formLabel} htmlFor={fieldId}>
           {label}
           {required && <span className={styles.required}>*</span>}
         </label>
       )}
-      {children}
+      {childElement}
     </div>
   );
 }

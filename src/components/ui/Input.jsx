@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import styles from './Input.module.scss';
 
 /**
@@ -30,6 +30,9 @@ export default function Input({
   className = '',
   ...props
 }) {
+  const reactId = useId();
+  const inputId = props.id || `input-${reactId}`;
+  const helperId = helperText ? `${inputId}-help` : undefined;
   const inputClasses = [
     styles.input,
     styles[variant],
@@ -45,7 +48,7 @@ export default function Input({
   return (
     <div className={styles.inputWrapper}>
       {label && (
-        <label className={styles.label}>
+        <label className={styles.label} htmlFor={inputId}>
           {label}
         </label>
       )}
@@ -53,10 +56,13 @@ export default function Input({
         className={inputClasses}
         placeholder={placeholder}
         disabled={disabled}
+        id={inputId}
+        aria-invalid={error || undefined}
+        aria-describedby={helperId}
         {...inputProps}
       />
       {helperText && (
-        <div className={`${styles.helperText} ${error ? styles.error : ''}`}>
+        <div id={helperId} className={`${styles.helperText} ${error ? styles.error : ''}`}>
           {helperText}
         </div>
       )}
