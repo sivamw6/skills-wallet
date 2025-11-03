@@ -179,7 +179,7 @@ Request Body:
 {
   "email": "newuser@example.com",
   "password": "password123",
-  "role": "provider" | "student" | "hr" | "verifier" | "instructor" | "admin"
+  "role": "provider"  | "hr verifier" | 
 }
 
 Response (200):
