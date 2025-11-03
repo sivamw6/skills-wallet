@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 // Pages
 import Login from "./pages/Login";
@@ -11,11 +11,31 @@ import IssueCredential from "./pages/provider/IssueCredential";
 import BlockchainRecords from "./pages/provider/BlockchainRecords";
 import StudentDetail from "./pages/provider/StudentDetail";
 import VerifierDashboard from "./pages/verifier/VerifierDashboard";
+import CreateUser from "./pages/provider/CreateUser";
 
 // A tiny in-memory auth context (PoC-level)
 export default function App() {
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState(() => {
+    try {
+      const raw = localStorage.getItem("skillswallet_session");
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  });
   const value = useMemo(() => ({ session, setSession }), [session]);
+
+  useEffect(() => {
+    try {
+      if (session) {
+        localStorage.setItem("skillswallet_session", JSON.stringify(session));
+      } else {
+        localStorage.removeItem("skillswallet_session");
+      }
+    } catch (_) {
+      // ignore storage errors in PoC
+    }
+  }, [session]);
 
   return (
     <AuthContext.Provider value={value}>
@@ -67,6 +87,14 @@ export default function App() {
           }
         />
         <Route
+          path="/provider/users/new"
+          element={
+            <RequireAdmin>
+              <CreateUser />
+            </RequireAdmin>
+          }
+        />
+        <Route
           path="/provider/student/:studentId"
           element={
             <RequireRole role="provider">
@@ -108,6 +136,19 @@ function RequireRole({ role, children }) {
   if (session.role !== role) {
     // Wrong role → send them to their correct home
     return <Navigate to={session.role === "provider" ? "/provider/dashboard" : "/verifier/dashboard"} replace />;
+  }
+  return children;
+}
+
+function RequireAdmin({ children }) {
+  const { session } = useAuth();
+
+  if (!session) {
+    return <Navigate to="/login" replace />;
+  }
+  // Only allow the built-in admin user
+  if (session.username !== "admin") {
+    return <Navigate to="/provider/dashboard" replace />;
   }
   return children;
 }

@@ -11,6 +11,7 @@ let subjectClasses = []; // Subject class storage
 let instructors = []; // Instructor storage
 let credentials = []; // Issued credentials
 let chainTx = []; // "Blockchain" transaction log
+let users = []; // Generic user storage (admin-created)
 
 // Mock Exam data
 const mockQuestions = [
@@ -459,4 +460,33 @@ export function verifyCredentialToken(tokenId) {
     tokenId,
     verificationDate: new Date().toISOString(),
   };
+}
+
+// ========================================
+// USER MANAGEMENT (Admin)
+// ========================================
+
+/**
+ * Create a generic platform user (education provider, student, HR, etc.)
+ * @param {Object} params
+ * @param {string} params.email
+ * @param {string} params.password
+ * @param {('provider'|'student'|'hr'|'verifier'|'instructor'|'admin')} params.role
+ */
+export function createUser({ email, password, role }) {
+  const userId = "user_" + Date.now();
+  const user = {
+    userId,
+    email,
+    password,
+    role: role || "student",
+    createdAt: new Date().toISOString(),
+    status: "active",
+  };
+  users.unshift(user);
+  return user;
+}
+
+export function listUsers() {
+  return users;
 }
