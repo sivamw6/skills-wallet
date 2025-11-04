@@ -5,12 +5,9 @@
 - **Admin** (under education provider) 
 
 ---
+## 🔗 Frontend-Backend Connection
 
-## 🔗 Frontend-Backend Connection Explanation
-
-### `VITE_API_BASE_URL`
-
-This is an **environment variable** used to configure the backend API base URL.
+`VITE_API_BASE_URL` is an **environment variable** used to configure the backend API base URL.
 
 
 - The frontend uses this variable to know where the backend API is located
@@ -33,26 +30,15 @@ This is an **environment variable** used to configure the backend API base URL.
 **For  backend:**
 - Only need to provide API endpoints (e.g., `/api/auth/login`)
 - The frontend will automatically prepend the base URL set in `.env`
-- So  backend should have routes like: `http://your-server-address:port/api/...`
+
 
 ---
 
 ## Authentication Method
 
-### Session Cookie Authentication
+**Session Cookie** authentication:
 
-Frontend uses **Session Cookie** authentication:
-
-1. **During login**:
-   - Frontend sends POST request to backend
-   - After successful validation, backend sets session cookie
-   - Subsequent frontend requests will automatically include this cookie
-
-2. **Subsequent requests**:
-   - Frontend automatically includes the cookie in every request
-   - Backend can read user information from the session
-
-3. **CORS Configuration** (Important!):
+1. **CORS Configuration** (Important!):
    ```javascript
    // Backend needs to allow frontend origin
    app.use(cors({
@@ -61,7 +47,7 @@ Frontend uses **Session Cookie** authentication:
    }));
    ```
 
-4. **Session Cookie Configuration**:
+2. **Session Cookie Configuration**:
    ```javascript
    app.use(session({
      secret: 'your-secret-key',
